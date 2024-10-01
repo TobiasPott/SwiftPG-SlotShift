@@ -1,6 +1,20 @@
 import SwiftUI
 
+extension Array where Element: Mergable {
+    func getEmptyCount() -> Int {
+        var result: Int = 0
+        for i in 0..<count {
+            if(self[i].isEmpty) {
+                result += 1
+            }
+        }
+        return result
+    }
+    
+}
+
 extension Matrix where T: Equatable {
+    
     func anyEmpty() -> Bool {
         for row in 0..<size.rows {
             for col in 0..<size.columns {

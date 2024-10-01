@@ -11,6 +11,9 @@ struct MenuView: View {
             Button(action: { game.nextTurn(.SY_newGame) }, 
                    label: { Label("New Game", systemImage: "plus") })
             Divider()
+            
+            Button(action: { game.revert() }, 
+                   label: { Label("Revert Turn", systemImage: "circle") })
             // Mode picker
 //
 //            Picker(selection: binding, label: Text("Mode")) {

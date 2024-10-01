@@ -14,6 +14,14 @@ class GameCollection : ObservableObject {
     @Published var gamesColors: [GameBase<SlotRGB>] = [.init(cfg5x5), .init(cfg5x5), .init(cfg5x5), .init(cfg5x5)]
     @Published var turnCount: Int = 0 
     
+    func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {
+        switch mode {
+        case .num2048_5by5: return games2048_5by5[slot]
+        case .num2048:      return games2048[slot]
+        case .colors:       return gamesColors[slot]
+        default:            return nil
+        }        
+    }
     func anyEmpty(_ mode: GameMode, _ slot: Int = 0) -> Bool {
         switch mode {
         case .num2048_5by5: return games2048_5by5[slot].anyEmpty
@@ -23,6 +31,14 @@ class GameCollection : ObservableObject {
         }
     }
     
+    func revert(_ mode: GameMode, _ slot: Int = 0) {
+        switch mode {
+        case .num2048_5by5: return games2048_5by5[slot].revert()
+        case .num2048:      return games2048[slot].revert()
+        case .colors:       return gamesColors[slot].revert()
+        default:            return
+        }
+    } 
     func getTurnCount(_ mode: GameMode, _ slot: Int = 0) -> Int {
         switch mode {
         case .num2048_5by5: return games2048_5by5[slot].turnCount

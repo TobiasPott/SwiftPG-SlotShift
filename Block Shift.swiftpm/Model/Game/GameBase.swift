@@ -49,6 +49,20 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
         self.reset()
         self.nextTurn(.fillSlot)
     }
+    internal func revert() {
+        if history.count > 0 {
+            let lastHistory = history.last!
+            let mergeDiff = self.matrix.data.getEmptyCount() - lastHistory.getEmptyCount()
+            
+            if(mergeDiff <= 0) {
+                self.matrix.data = lastHistory
+                history.dropLast()
+                // ToDo: do the actual revert of data and reduction of counts
+                //        also remove last history from list
+            }
+            print("Revert: \(self.matrix.data.count) \(mergeDiff)")
+        }
+    }
     internal func reset() {
         matrix.clear(baseValue: .empty)
         history = []
@@ -56,11 +70,13 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
         slotCount = 0
         mergedCount = 0
     }
-    internal func finalizeMove() {
-        move_FillSlot()
+    internal func prepareMove() {
         history.append(matrix.data)
         if (history.count > self.maxHistory)
         { history.removeFirst(history.count - self.maxHistory) }
+    }
+    internal func finalizeMove() {
+        move_FillSlot()
         turnCount += 1
     }
     

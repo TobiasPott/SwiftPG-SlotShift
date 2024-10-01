@@ -16,6 +16,7 @@ protocol GameBehaviour {
     
     // Functions
     func newGame()
+    func revert()
     func reset()
     func nextTurn(_ move: GameMove)
 }
