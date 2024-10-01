@@ -54,14 +54,16 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
             let lastHistory = history.last!
             let mergeDiff = self.matrix.data.getEmptyCount() - lastHistory.getEmptyCount()
             
+            
+            self.matrix.data = lastHistory
+            _ = history.remove(at: history.count-1)
+            
             if(mergeDiff >= 0) {
-                self.matrix.data = lastHistory
-                _ = history.dropLast()
-                mergedCount -= (mergeDiff+1)
+                mergedCount -= (mergeDiff)
                 // ToDo: do the actual revert of data and  of counts
                 //        also remove last history from list
             }
-            print("Revert: \(self.matrix.data.count) \(mergeDiff)")
+            print("Revert: \(history.count) \(mergeDiff)")
         }
     }
     internal func reset() {

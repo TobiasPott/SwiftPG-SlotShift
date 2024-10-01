@@ -34,7 +34,7 @@ struct SlotNumber: Mergable {
                     .backgroundButtonNEW(GameStatics.accentColor)                
             } else {
                 numberView
-                    .backgroundButtonNEW(Color.gray)
+                    .backgroundButtonNEW(Color.white.opacity(0.5))
             }
         }
         .aspectRatio(1.0, contentMode: .fit)
@@ -42,11 +42,6 @@ struct SlotNumber: Mergable {
     }
     var numberView: some View {
         let isNotClear: Bool = Mode != .clear
-        // getting the left padded string
-        //        let valAsStr: String = red.toSlotText(withPad: "0")
-        // getting the leading zero padding string
-        //        let padAsStr: String = red.toSlotPaddingText(withPad: "0")
-        
         return VStack(spacing: 0) {
             if isNotClear {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
