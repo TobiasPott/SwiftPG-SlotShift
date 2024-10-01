@@ -31,11 +31,14 @@ struct SlotNumber: Mergable {
             let isNotClear: Bool = Mode != .clear
             if isNotClear {
                 numberView
-                    .backgroundButton(GameStatics.accentColor)                
+                    .backgroundButtonNEW(GameStatics.accentColor)                
+            } else {
+                numberView
+                    .backgroundButtonNEW(Color.gray)
             }
         }
+        .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)
-        .backgroundButton(.primary)
     }
     var numberView: some View {
         let isNotClear: Bool = Mode != .clear
@@ -46,9 +49,7 @@ struct SlotNumber: Mergable {
         
         return VStack(spacing: 0) {
             if isNotClear {
-                Spacer(minLength: 0)
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Spacer(minLength: 0)
                     //                    Text(padAsStr).monospaced(size: 20.0)
                     //                    Text("\(red)").monospacedScaledToFit()
                     //                    Text(valAsStr).monospacedScaledToFit()
@@ -57,7 +58,6 @@ struct SlotNumber: Mergable {
             }
         }
         .frameInfinity(.bottomTrailing)
-        .padding([.leading, .top, .trailing], 8)
     }
     
 }
