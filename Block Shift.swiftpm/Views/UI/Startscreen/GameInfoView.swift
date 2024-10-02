@@ -10,13 +10,13 @@ struct GameInfoView: View {
         if gameMode != .none {
             UIPanel {
                 VStack(alignment: .leading) {
-                    Text("Slot \(game.slot)")
+                    Text("Slot \(game.slot)").fontWeight(.bold)
                     let gameBehaviour = game.games.getGame(gameMode, gameSlot)!
                     Text("Turns  \t\t\(gameBehaviour.turnCount)")
                     Text("Merged \t\t\(gameBehaviour.mergedCount)")
                     Text("History\t\t\(gameBehaviour.historyCount) (max: \(GameStatics.maxHistory))")
                 }.frame(maxWidth: 240, alignment: .leading)
-                    .font(Statics.captionFont)
+                    .font(Statics.calloutFont)
             }
         }
         

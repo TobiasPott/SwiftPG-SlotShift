@@ -29,13 +29,8 @@ struct SlotNumber: Mergable {
     var asView: some View {
         return ZStack {
             let isNotClear: Bool = Mode != .clear
-            if isNotClear {
-                numberView
-                    .backgroundButtonNEW(GameStatics.accentColor)                
-            } else {
-                numberView
-                    .backgroundButtonNEW(Color.white.opacity(0.5))
-            }
+            numberView
+                .backgroundButton(isNotClear ? GameStatics.accentColor : Color.white.opacity(0.5))
         }
         .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)

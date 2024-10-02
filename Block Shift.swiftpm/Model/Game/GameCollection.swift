@@ -1,16 +1,24 @@
 import SwiftUI
 
-struct GameConfig {
+struct GameConfig: Codable {
     let rows: Int
     let columns: Int
 }
 
-class GameCollection : ObservableObject {
+class GameCollection : ObservableObject, Codable {
+    typealias GameTypeNumbers = GameBase<SlotNumber>
+    typealias GameTypeColors = GameBase<SlotNumber>
     
-    @Published var games2048_5by5: [GameBase<SlotNumber>] = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
-    @Published var games2048: [GameBase<SlotNumber>] = [.init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4)]
-    @Published var gamesColors: [GameBase<SlotRGB>] = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
+    @Published var games2048_5by5: [GameTypeNumbers] 
+    @Published var games2048: [GameTypeNumbers]
+    @Published var gamesColors: [GameTypeColors]
     @Published var turnCount: Int = 0 
+    
+    init() {
+        games2048_5by5 = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
+        games2048 = [.init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4)]
+        gamesColors = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
+    }
     
     func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {
         switch mode {
@@ -45,4 +53,21 @@ class GameCollection : ObservableObject {
         return 0
     }
     
+    enum CodingKeys: String, CodingKey {
+        case turnCount, games_numbers_5x5, games_numbers_4x4, games_colors_5x5
+    }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.games2048_5by5 = try container.decode([GameTypeNumbers].self, forKey: .games_colors_5x5)
+        self.games2048 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_4x4)
+        self.gamesColors = try container.decode([GameTypeColors].self, forKey: .games_colors_5x5)
+        self.turnCount = try container.decode(Int.self, forKey: .turnCount)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.games2048_5by5, forKey: .games_numbers_5x5)
+        try container.encode(self.games2048, forKey: .games_numbers_4x4)
+        try container.encode(self.gamesColors, forKey: .games_colors_5x5)
+    }
 }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-class Matrix<T: Mergable> : ObservableObject {
+class Matrix<T: Mergable> : ObservableObject, Codable {
     typealias Data = [T]
     let size: MatrixSize
     @Published public var data: Data
@@ -31,7 +31,7 @@ class Matrix<T: Mergable> : ObservableObject {
             data[(row * size.columns) + column] = newValue
         }
     }
- 
+    
     func shiftDown(condition: MergeCondition = .none,_ clearValue: T) -> Int {
         moveColumns(by: 1, clearValue)
         let merged: Int = mergeColumns(by: 1, condition: condition, clearValue)
@@ -70,6 +70,21 @@ class Matrix<T: Mergable> : ObservableObject {
             return 1
         }
         return 0
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case size, data
+    }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.size = try container.decode(MatrixSize.self, forKey: .size)
+        self.data = try container.decode(Data.self, forKey: .data)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.size, forKey: .size)
+        try container.encode(self.data, forKey: .data)
     }
     
 }

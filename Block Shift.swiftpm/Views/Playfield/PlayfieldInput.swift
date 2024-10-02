@@ -20,8 +20,7 @@ struct PlayfieldInput: View {
                     default: print("no clue")
                     }
                 }
-            )             
-        //            .background(.green)
+            )
             .padding(-12)
         
     }

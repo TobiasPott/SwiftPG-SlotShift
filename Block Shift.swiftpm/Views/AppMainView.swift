@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AppMainView: View {
-
+    
     @StateObject var game: GameHandle = GameHandle()
     @State var gameSlot: Int = 0
     
@@ -10,8 +10,6 @@ struct AppMainView: View {
             let isWide = geometry.size.width > geometry.size.height
             
             VStack {
-                
-                
                 HStack() {
                     Spacer()
                     Image(systemName: "questionmark.circle.fill")
@@ -45,5 +43,20 @@ struct AppMainView: View {
             .frame(maxWidth: .infinity)
             .background(Color(.sRGB, white: 0.85, opacity: 1.0))
         }
+        .onAppear(perform: {
+            /// load game from UserDefaults (only succeeds if present)
+            game.load()
+        })
+        // handle termination event
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification), perform: { output in
+            // Code to run on will terminate
+            print("App terminated!")
+        })
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification), perform: { output in
+            // Code to run on will terminate
+            print("App became inactive!")
+        })
+        
     }
+        
 }

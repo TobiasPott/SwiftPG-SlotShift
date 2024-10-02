@@ -5,7 +5,7 @@ struct PlayfieldSlotView<S: Mergable>: View {
     
     var body: some View {
         entry.asView
-            .shadowDrop(.black, radius: 2, x: 0, y: -1)
+            .shadowDrop(radius: 2, x: 0, y: -1)
             .aspectRatio(1.0, contentMode: .fit)
     }
 }

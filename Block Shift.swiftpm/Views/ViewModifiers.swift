@@ -22,5 +22,3 @@ extension View {
     func shadowDrop(_ color: Color = .black.opacity(0.5), radius: CGFloat = 2.5, x: CGFloat = 0.0, y: CGFloat = 1.0) -> some View { self.shadow(color: color, radius: radius, x: x, y: y) }
     
 }
-
-// .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 4)

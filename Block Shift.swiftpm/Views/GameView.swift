@@ -3,11 +3,7 @@ import SwiftUI
 struct GameView: View {
     @ObservedObject var game: GameHandle;
     
-    var body: some View {    
-        
-        UIPanel {
-            Text("Slot: \(game.slot) \(game.tick)")
-        }
+    var body: some View {
         // Playfield block
         ZStack {
             Group { 
@@ -26,7 +22,6 @@ struct GameView: View {
         }
         .padding(.bottom, 4.0)
         .backgroundPanel()
-        //        .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom)))
         .transition(.scale)
     }
 }

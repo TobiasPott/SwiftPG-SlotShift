@@ -8,7 +8,7 @@ struct UIButton<Content: View>: View {
             .padding()
             .padding(.vertical, 6.0)
             .padding(.horizontal)
-            .backgroundButtonNEW()
+            .backgroundButton()
             .font(Statics.bodyFont)
         
     }

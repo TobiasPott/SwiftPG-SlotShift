@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum GameMode: CaseIterable {
+enum GameMode: String, CaseIterable, Codable {
     case none, num2048_5by5, num2048, colors
 }
 
@@ -9,11 +9,12 @@ enum GameMove {
     case SY_newGame, SY_reset 
 }
 
-class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
+class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     typealias M = Matrix<S>
+    typealias H = [M.Data]
     
     @Published public var matrix: M
-    @Published var history: [M.Data]
+    @Published var history: H
     
     @Published public var mergeCondition: MergeCondition = .matchRGB
     @Published public var mergeMode: MergeMode = .add
@@ -82,6 +83,36 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
     internal func finalizeMove() {
         move_FillSlot()
         turnCount += 1
+    }
+    
+    enum CodingKeys: CodingKey {
+        case matrix, history, mergeCondition, mergeMode, turnCount, slotCount, mergedCount
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.matrix = try container.decode(M.self, forKey: .matrix)
+        self.history = try container.decode(H.self, forKey: .history)
+        
+        self.mergeCondition = try container.decode(MergeCondition.self, forKey: .mergeCondition)  
+        self.mergeMode = try container.decode(MergeMode.self, forKey: .mergeMode)
+        
+        self.turnCount = try container.decode(Int.self, forKey: .turnCount)
+        self.slotCount = try container.decode(Int.self, forKey: .slotCount)
+        self.mergedCount = try container.decode(Int.self, forKey: .mergedCount)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.matrix, forKey: .matrix)
+        try container.encode(self.history, forKey: .history)
+        
+        try container.encode(self.mergeCondition, forKey: .mergeCondition)
+        try container.encode(self.mergeMode, forKey: .mergeMode)
+        
+        try container.encode(self.turnCount, forKey: .turnCount)
+        try container.encode(self.slotCount, forKey: .slotCount)
+        try container.encode(self.mergedCount, forKey: .mergedCount)
     }
     
 }
