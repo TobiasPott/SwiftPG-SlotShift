@@ -14,6 +14,6 @@ struct ButtonStyled: View {
                 withAnimation { action() }
             } else { action() }
         }
-        .backgroundButton(isSelected ? GameStatics.accentColor : Color(.sRGB, white: 0.70, opacity: 1.0))
+        .backgroundButton(isSelected ? Statics.accentColor : Color(.sRGB, white: 0.70, opacity: 1.0))
     }
 }

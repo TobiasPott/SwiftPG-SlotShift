@@ -7,7 +7,7 @@ struct PlayfieldView<S: Mergable>: View {
     
     var body: some View {
         VStack(spacing: slotSpacing) {
-            ForEach(0 ..< matrix.size.rows) { row in
+            ForEach(0 ..< matrix.size.rows, id: \.self) { row in
                 PlayfieldColumnView(matrix: matrix, row: row, numOfColumns: matrix.size.columns, slotSpacing: slotSpacing)
             }
         }

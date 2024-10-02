@@ -1,10 +1,7 @@
 import SwiftUI
 
 struct GameModeView: View {
-    static let icons: [GameMode: Image] = [.num2048: Image(systemName: "4.lane"), .num2048_5by5: Image(systemName: "5.lane"), .colors: Image(systemName: "c.circle")]
-    
     @Binding var mode: GameMode
-    
     
     var body: some View {
         VStack {
@@ -16,10 +13,9 @@ struct GameModeView: View {
                     if i == .none { EmptyView() } 
                     else { 
                         Button(action: { mode = i }, 
-                               label: { GameModeView.icons[i
-                               ]!.resizable().aspectRatio(contentMode: .fit) })
+                               label: { Statics.getIcon(i).resizable().aspectRatio(contentMode: .fit) })
                         .foregroundStyle(i != mode ? Color.primary : Color.black)
-                        .backgroundButton(i != mode ? GameStatics.accentColor : .gray)
+                        .backgroundButton(i != mode ? Statics.accentColor : .gray)
                     }
                     
                 }

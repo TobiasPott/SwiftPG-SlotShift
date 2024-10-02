@@ -18,15 +18,13 @@ struct AppMainView: View {
                 VStack(spacing: 16.0) {
                     let title = TitleboardView()
                     let scoreboard = ScoreboardView(game: game) 
-                    if isWide {
-                        HStack(alignment: .bottom) { 
+                    
+                    Stack(layout: isWide ? .horizontal : .vertical, content: {
+                        Group {
                             title
                             if game.mode != .none { scoreboard }
                         }
-                    } else {
-                        title
-                        if game.mode != .none { scoreboard }
-                    }             
+                    }, verticalAlignment: .bottom, horizontalAlignment: .center)
                     
                     if game.mode == .none { StartscreenView(game: game) } 
                     else { GameView(game: game) }
@@ -50,13 +48,14 @@ struct AppMainView: View {
         // handle termination event
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification), perform: { output in
             // Code to run on will terminate
-            print("App terminated!")
+//            print("App terminated!")
         })
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification), perform: { output in
             // Code to run on will terminate
-            print("App became inactive!")
+//            print("App became inactive!")
+            game.save()
         })
         
     }
-        
+    
 }

@@ -14,8 +14,8 @@ class GameHandle : ObservableObject, Codable {
         nextTurn(.SY_newGame)
     }
     func quitGame() {
-        self.save()
         self.setMode(.none)
+        self.save()
     }
     func revert() {    
         tick += 1
@@ -50,19 +50,44 @@ class GameHandle : ObservableObject, Codable {
     }
     
     func load() {
-        if let data = UserDefaults.standard.data(forKey: "SavedData") {
-            if let decoded = try? JSONDecoder().decode(GameHandle.self, from: data) {
+        if let data = UserDefaults.standard.string(forKey: Statics.saveFileKey) {
+            //            print ("Loaded data for '\(Statics.saveFileKey)'")
+            let decoder = JSONDecoder()
+            do {
+                
+                let game = try decoder.decode(GameHandle.self, from: data.data(using: .utf8)!)
+                
                 self.tick = 0
-                self.games = decoded.games
-                self.setSlot(decoded.slot)
-                self.setMode(decoded.mode)
+                self.games = game.games
+                self.setSlot(game.slot)
+                self.setMode(game.mode)
+                self.tick += 1
+                //                print ("Fully loaded game state")
                 return
+                
+            } catch let DecodingError.keyNotFound(key, context) {
+                print("Decoding error (keyNotFound): \(key) not found in \(context.debugDescription)")
+                print("Coding path: \(context.codingPath)")
+            } catch let DecodingError.dataCorrupted(context) {
+                print("Decoding error (dataCorrupted): data corrupted in \(context.debugDescription)")
+                print("Coding path: \(context.codingPath)")
+            } catch let DecodingError.typeMismatch(type, context) {
+                print("Decoding error (typeMismatch): type mismatch of \(type) in \(context.debugDescription)")
+                print("Coding path: \(context.codingPath)")
+            } catch let DecodingError.valueNotFound(type, context) {
+                print("Decoding error (valueNotFound): value not found for \(type) in \(context.debugDescription)")
+                print("Coding path: \(context.codingPath)")
+            } catch let error {
+                print("Coding path: \(error.localizedDescription)")
             }
+            
+            
         }
     }
+    
     func save() {
         if let encoded = try? JSONEncoder().encode(self) {
-            UserDefaults.standard.set(encoded, forKey: Statics.saveFileKey)
+            UserDefaults.standard.set(String(data: encoded, encoding: .utf8)!, forKey: Statics.saveFileKey)
         }
     }
     

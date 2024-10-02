@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct GameConfig: Codable {
+    static let GameCfg5x5: GameConfig = .init(rows: 5, columns: 5)
+    static let GameCfg4x4: GameConfig = .init(rows: 4, columns: 4)
+    
     let rows: Int
     let columns: Int
 }
@@ -15,9 +18,9 @@ class GameCollection : ObservableObject, Codable {
     @Published var turnCount: Int = 0 
     
     init() {
-        games2048_5by5 = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
-        games2048 = [.init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4)]
-        gamesColors = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
+        games2048_5by5 = Statics.make<SlotNumber>(.GameCfg5x5, 4)
+        games2048 = Statics.make<SlotNumber>(.GameCfg4x4, 4)
+        gamesColors = Statics.make<SlotRGB>(.GameCfg5x5, 4)
     }
     
     func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {
@@ -58,7 +61,7 @@ class GameCollection : ObservableObject, Codable {
     }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.games2048_5by5 = try container.decode([GameTypeNumbers].self, forKey: .games_colors_5x5)
+        self.games2048_5by5 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_5x5)
         self.games2048 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_4x4)
         self.gamesColors = try container.decode([GameTypeColors].self, forKey: .games_colors_5x5)
         self.turnCount = try container.decode(Int.self, forKey: .turnCount)
@@ -69,5 +72,7 @@ class GameCollection : ObservableObject, Codable {
         try container.encode(self.games2048_5by5, forKey: .games_numbers_5x5)
         try container.encode(self.games2048, forKey: .games_numbers_4x4)
         try container.encode(self.gamesColors, forKey: .games_colors_5x5)
+        try container.encode(self.turnCount, forKey: .turnCount)
     }
+    
 }

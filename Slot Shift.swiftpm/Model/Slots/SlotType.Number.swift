@@ -30,7 +30,7 @@ struct SlotNumber: Mergable {
         return ZStack {
             let isNotClear: Bool = Mode != .clear
             numberView
-                .backgroundButton(isNotClear ? GameStatics.accentColor : Color.white.opacity(0.5))
+                .backgroundButton(isNotClear ? Statics.accentColor : Color.white.opacity(0.5))
         }
         .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)

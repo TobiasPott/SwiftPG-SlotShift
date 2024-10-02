@@ -14,7 +14,7 @@ struct GameInfoView: View {
                     let gameBehaviour = game.games.getGame(gameMode, gameSlot)!
                     Text("Turns  \t\t\(gameBehaviour.turnCount)")
                     Text("Merged \t\t\(gameBehaviour.mergedCount)")
-                    Text("History\t\t\(gameBehaviour.historyCount) (max: \(GameStatics.maxHistory))")
+                    Text("History\t\t\(gameBehaviour.historyCount) (max: \(Statics.maxHistory))")
                 }.frame(maxWidth: 240, alignment: .leading)
                     .font(Statics.calloutFont)
             }

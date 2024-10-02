@@ -8,10 +8,12 @@ struct PlayfieldColumnView<S: Mergable>: View {
     var slotSpacing: CGFloat = 6.0
     
     var body: some View {
-        HStack(spacing: slotSpacing) {
-            ForEach(0 ..< numOfColumns) { column in 
+        HStack(spacing: slotSpacing) {    
+            ForEach(0 ..< numOfColumns, id: \.self) { column in 
                 PlayfieldSlotView(entry: matrix[row, column])
-            }
+                    .transition(.scale)
+            }   
+            
         }
     }
 }

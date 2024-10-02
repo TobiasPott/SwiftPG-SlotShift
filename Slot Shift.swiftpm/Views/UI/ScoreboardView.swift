@@ -31,6 +31,7 @@ struct ScoreboardView: View {
         }.monospaced(size: 16)
             .padding(8.0)
             .backgroundPanel()
+            .transition(.scale)
         
     }
 }

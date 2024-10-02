@@ -77,8 +77,8 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     }
     internal func prepareMove() {
         history.append(matrix.data)
-        if (history.count > GameStatics.maxHistory)
-        { history.removeFirst(history.count - GameStatics.maxHistory) }
+        if (history.count > Statics.maxHistory)
+        { history.removeFirst(history.count - Statics.maxHistory) }
     }
     internal func finalizeMove() {
         move_FillSlot()

@@ -10,7 +10,7 @@ extension EdgeInsets {
 
 extension View {
     
-    func backgroundPanel(_ color: Color = GameStatics.accentColor) -> some View {
+    func backgroundPanel(_ color: Color = Statics.accentColor) -> some View {
         let buttonBG = Image("button_square_depth_line")
             .resizable(capInsets: .inset20)
         let inputBG = Image("input_outline_square")
@@ -23,7 +23,7 @@ extension View {
         return self.background(stack.colorMultiply(color).shadowDrop(y: 4.0))
     }
     
-    func backgroundButton(_ color: Color = GameStatics.accentColor) -> some View {
+    func backgroundButton(_ color: Color = Statics.accentColor) -> some View {
         let buttonBG = Image("button_square_depth_line").resizable(capInsets: .inset20)
         let inputBG = Image("button_square_line_thin").resizable(capInsets: .inset20)
         
