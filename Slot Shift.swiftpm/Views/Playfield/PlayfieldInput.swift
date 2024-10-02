@@ -15,9 +15,9 @@ struct PlayfieldInput: View {
                     switch(value.translation.width, value.translation.height) {
                     case (...0, -30...30): /* left */ game.nextTurn(.left)
                     case (0..., -30...30): /* right */ game.nextTurn(.right)
-                    case (-100...100, ...0): /* up */ game.nextTurn(.up)
-                    case (-100...100, 0...): /* down */ game.nextTurn(.down)
-                    default: print("no clue")
+                    case (-30...30, ...0): /* up */ game.nextTurn(.up)
+                    case (-30...30, 0...): /* down */ game.nextTurn(.down)
+                    default: print("Drag gesture not clear.")
                     }
                 }
             )

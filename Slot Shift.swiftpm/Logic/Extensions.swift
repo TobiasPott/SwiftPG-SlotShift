@@ -16,7 +16,7 @@ extension View {
         let inputBG = Image("input_outline_square")
             .resizable(capInsets: .inset20)
         
-        let stack = ZStack {
+        let stack = Group {
             buttonBG.padding(.bottom, -8)
             inputBG
         }

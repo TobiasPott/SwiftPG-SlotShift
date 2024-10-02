@@ -38,8 +38,7 @@ extension Matrix where T: Equatable {
         var result: Int = 0
         for c in 0..<self.size.columns {
             result += mergeColumn(c, by: by, condition: condition, clearWith)
-        }        
-        //        print("mergeColumns: by \(by) = \(result)")
+        }
         return result
     }
     func mergeColumn(_ c: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
@@ -69,7 +68,6 @@ extension Matrix where T: Equatable {
         for r in 0..<self.size.rows {
             result += mergeRow(r, by: by, condition: condition, clearWith)
         }        
-        //        print("mergeRows: by \(by) = \(result)")
         return result
     }
     func mergeRow(_ r: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {

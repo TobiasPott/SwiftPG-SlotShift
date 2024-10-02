@@ -36,8 +36,7 @@ extension Matrix where T: Equatable {
         let revEnd = size.getRevEndRow(by)
         for r in rowsArray {
             var rCur = r;
-            while(rCur != revEnd
-                  || rCur < 0 || rCur > 10)
+            while(rCur != revEnd)
             {
                 _ = self.moveIf(rCur, c, rCur+by, c, clearWith)
                 // change current row by 'by' value (includes sign)
@@ -62,8 +61,7 @@ extension Matrix where T: Equatable {
         let revEnd = size.getRevEndColumn(by)
         for newC in colsArray {
             var cCur = newC;
-            while(cCur != revEnd
-                  || cCur < 0 || cCur > 10)
+            while(cCur != revEnd)
             {
                 _ = self.moveIf(r, cCur, r, cCur+by, clearWith)
                 // change current row by 'by' value (includes sign)
