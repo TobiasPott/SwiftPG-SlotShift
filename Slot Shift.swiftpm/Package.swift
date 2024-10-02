@@ -8,17 +8,17 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Block Shift",
+    name: "Slot Shift",
     platforms: [
         .iOS("15.6")
     ],
     products: [
         .iOSApplication(
-            name: "Block Shift",
+            name: "Slot Shift",
             targets: ["AppModule"],
-            bundleIdentifier: "de.tobiaspott.playground.colorshift",
+            bundleIdentifier: "de.tobiaspott.playground.slotshift",
             teamIdentifier: "LR2W97LX43",
-            displayVersion: "1.0",
+            displayVersion: "0.1",
             bundleVersion: "1",
             appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.brown),
@@ -32,7 +32,7 @@ let package = Package(
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
-            appCategory: .games
+            appCategory: .puzzleGames
         )
     ],
     targets: [
