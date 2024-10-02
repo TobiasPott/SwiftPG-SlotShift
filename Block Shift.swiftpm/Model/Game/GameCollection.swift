@@ -7,9 +7,9 @@ struct GameConfig {
 
 class GameCollection : ObservableObject {
     
-    @Published var games2048_5by5: [GameBase<SlotNumber>] = Array(repeating: .init(GameStatics.GameCfg5x5), count: 4)
-    @Published var games2048: [GameBase<SlotNumber>] = Array(repeating: .init(GameStatics.GameCfg4x4), count: 4)
-    @Published var gamesColors: [GameBase<SlotRGB>] = Array(repeating: .init(GameStatics.GameCfg5x5), count: 4)
+    @Published var games2048_5by5: [GameBase<SlotNumber>] = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
+    @Published var games2048: [GameBase<SlotNumber>] = [.init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4), .init(GameStatics.GameCfg4x4)]
+    @Published var gamesColors: [GameBase<SlotRGB>] = [.init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5), .init(GameStatics.GameCfg5x5)]
     @Published var turnCount: Int = 0 
     
     func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {

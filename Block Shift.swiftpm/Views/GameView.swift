@@ -5,6 +5,9 @@ struct GameView: View {
     
     var body: some View {    
         
+        UIPanel {
+            Text("Slot: \(game.slot) \(game.tick)")
+        }
         // Playfield block
         ZStack {
             Group { 

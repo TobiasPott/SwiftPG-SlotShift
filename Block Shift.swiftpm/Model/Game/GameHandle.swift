@@ -15,6 +15,7 @@ class GameHandle : ObservableObject {
         games.revert(mode, slot) 
     }
     func setMode(_ newMode: GameMode) { tick += 1; mode = newMode }
+    func setSlot(_ newSlot: Int) { tick += 1; slot = newSlot }
     func nextTurn(_ move: GameMove) {
         tick += 1
         games.nextTurn(mode, slot, move: move)

@@ -8,7 +8,9 @@ struct StartscreenView: View {
     var body: some View {
         VStack(spacing: 18) {
 //            GameTitleView(gameMode: selectedGameMode)
-            GameSlotView(slot: $game.slot)
+            
+            GameSlotView(game: game)
+            GameInfoView(game: game, gameMode: selectedGameMode, gameSlot: game.slot)
             GameStartView(game: game)
         }
         .padding(.vertical, 6.0)
