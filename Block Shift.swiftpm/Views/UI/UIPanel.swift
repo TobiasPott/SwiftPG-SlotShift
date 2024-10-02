@@ -7,7 +7,7 @@ struct UIPanel<Content: View>: View {
         content() 
             .padding()
             .padding(.vertical, 6.0)
-            .padding(.horizontal)
+            .padding(.horizontal, 6.0)
             .backgroundPanel()
             .font(Statics.bodyFont)
         

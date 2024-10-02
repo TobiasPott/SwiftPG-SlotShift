@@ -1,5 +1,9 @@
 import SwiftUI
 
+enum GameMode: CaseIterable {
+    case none, num2048_5by5, num2048, colors
+}
+
 enum GameMove {
     case none, up, down, left, right, fillSlot
     case SY_newGame, SY_reset 
@@ -7,8 +11,6 @@ enum GameMove {
 
 class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
     typealias M = Matrix<S>
-    
-    private let maxHistory: Int = 25
     
     @Published public var matrix: M
     @Published var history: [M.Data]
@@ -60,8 +62,7 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
             
             if(mergeDiff >= 0) {
                 mergedCount -= (mergeDiff)
-                // ToDo: do the actual revert of data and  of counts
-                //        also remove last history from list
+                // ToDo: check correct value correction
             }
             print("Revert: \(history.count) \(mergeDiff)")
         }
@@ -75,8 +76,8 @@ class GameBase<S: Mergable> : ObservableObject, GameBehaviour {
     }
     internal func prepareMove() {
         history.append(matrix.data)
-        if (history.count > self.maxHistory)
-        { history.removeFirst(history.count - self.maxHistory) }
+        if (history.count > GameStatics.maxHistory)
+        { history.removeFirst(history.count - GameStatics.maxHistory) }
     }
     internal func finalizeMove() {
         move_FillSlot()

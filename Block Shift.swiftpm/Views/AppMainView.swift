@@ -19,7 +19,6 @@ struct AppMainView: View {
                 
                 VStack(spacing: 16.0) {
                     let title = TitleboardView()
-                    // ToDo: Scoreboard needs to be hooked to correct game for current mode
                     let scoreboard = ScoreboardView(game: game) 
                     if isWide {
                         HStack(alignment: .bottom) { 

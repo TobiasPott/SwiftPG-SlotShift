@@ -8,19 +8,33 @@ struct GameStartView: View {
     
     var body: some View {
         UIPanel {
-            HStack {
-                ButtonStyled(title: "Load", action: {
-                    print("Not implemented yet: Load")
-                }, isSelected: false)
-                .disabled(true)
-                .frameMax(128, 48)
+            VStack {
+                let canContinue = gameMode != .none && game.getGame(gameMode).historyCount > 0
+                if gameMode != .none {
+                    UIPanel {
+                        VStack(alignment: .leading) {
+                            let gameBehaviour = game.getGame(gameMode)
+                            Text("Turns  \t\(gameBehaviour.turnCount)")
+                            Text("Merged \t\(gameBehaviour.mergedCount)")
+                            Text("History\t\(gameBehaviour.historyCount) (max: \(GameStatics.maxHistory))")
+                        }.frame(maxWidth: 320, alignment: .leading)
+                    }.padding(.bottom)
+                }
                 
-                ButtonStyled(title: "New Game", action: {
-                    game.setMode(gameMode)
-                    game.startGame(gameMode)
-                })
-                .frameMax(128, 48)
-                
+                HStack {
+                    ButtonStyled(title: "Continue", action: {
+                        game.setMode(gameMode)
+                    }, isSelected: canContinue)
+//                    .disabled(true)
+                    .frameMax(128, 48)
+                    
+                    ButtonStyled(title: "New Game", action: {
+                        game.setMode(gameMode)
+                        game.startGame(gameMode)
+                    })
+                    .frameMax(128, 48)
+                    
+                }
             }
         }
     }

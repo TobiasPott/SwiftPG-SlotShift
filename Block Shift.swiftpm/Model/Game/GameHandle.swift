@@ -19,4 +19,6 @@ class GameHandle : ObservableObject {
         tick += 1
         games.nextTurn(mode, slot, move: move)
     }
+    func getGame() -> GameBehaviour { return games.getGame(mode, slot)! }
+    func getGame(_ mode: GameMode) -> GameBehaviour { return games.getGame(mode, slot)! }
 }

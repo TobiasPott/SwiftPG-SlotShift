@@ -13,7 +13,6 @@ struct GameSlotView: View {
                         ButtonStyled(title: "\(i)", action: { 
                             slot = i
                         }, isSelected: slot == i, withAnim: false)
-                        // ToDo: Re-Add 'selected' state and visualisation to button and slot view
                         .frame(maxWidth: 48)
                     }
                 }

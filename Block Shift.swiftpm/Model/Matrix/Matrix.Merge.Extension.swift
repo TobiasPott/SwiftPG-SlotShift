@@ -51,7 +51,7 @@ extension Matrix where T: Equatable {
         
         //        let revEnd = size.getRevEndRow(by)
         for r in rowsArray {
-            // ToDo: add iteration over all (to revEnd) to achieve merging all possible per columns/row
+            // Remark: add iteration over all (to revEnd) to achieve merging all possible per columns/row
             //    change is required on columns AND rows functions 
             if self.canMerge(r, c, r+by, c, condition: condition) {
                 if self.mergeIfNot(r, c, r+by, c, clearWith) {
@@ -81,7 +81,7 @@ extension Matrix where T: Equatable {
         
         //        let revEnd = size.getRevEndColumn(by)
         for c in colsArray {
-            // ToDo: add iteration over all (to revEnd) to achieve merging all possible per columns/row
+            // Remark: add iteration over all (to revEnd) to achieve merging all possible per columns/row
             //    change is required on columns AND rows functions
             if self.canMerge(r, c, r, c+by, condition: condition) {
                 if self.mergeIfNot(r, c, r, c+by, clearWith) { 
