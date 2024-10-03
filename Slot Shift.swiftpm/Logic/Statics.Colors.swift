@@ -1,8 +1,10 @@
 import SwiftUI
 
 extension Statics {
-    static private let colors: [Color] = [.pink, .red, .orange, .cyan, .blue, .purple]
+    ///->List of 'theme' colors
+    static private let colors: [Color] = [Color.orange] 
     
+    ///->Accent color storage member and read-only property to replace system's accentColor
     static private var _accentColor: Color = .clear
     static var accentColor: Color { get {
         if _accentColor == .clear {

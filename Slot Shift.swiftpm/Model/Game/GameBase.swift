@@ -53,17 +53,14 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         self.nextTurn(.fillSlot)
     }
     internal func revert() {
-        if history.count > 0 {
-            let lastHistory = history.last!
+        if history.count > 0, let lastHistory = history.last {
             let mergeDiff = self.matrix.data.getEmptyCount() - lastHistory.getEmptyCount()
-            
             
             self.matrix.data = lastHistory
             _ = history.remove(at: history.count-1)
             
             if(mergeDiff >= 0) {
                 mergedCount -= (mergeDiff)
-                // ToDo: check correct value correction
             }
             print("Revert: \(history.count) \(mergeDiff)")
         }

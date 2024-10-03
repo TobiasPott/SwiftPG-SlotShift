@@ -11,10 +11,11 @@ struct GameInfoView: View {
             UIPanel {
                 VStack(alignment: .leading) {
                     Text("Slot \(game.slot)").fontWeight(.bold)
-                    let gameBehaviour = game.games.getGame(gameMode, gameSlot)!
-                    Text("Turns  \t\t\(gameBehaviour.turnCount)")
-                    Text("Merged \t\t\(gameBehaviour.mergedCount)")
-                    Text("History\t\t\(gameBehaviour.historyCount) (max: \(Statics.maxHistory))")
+                    if let gameBehaviour = game.getGameBehaviour(gameMode) {
+                        Text("Turns  \t\t\(gameBehaviour.turnCount)")
+                        Text("Merged \t\t\(gameBehaviour.mergedCount)")
+                        Text("History\t\t\(gameBehaviour.historyCount) (max: \(Statics.maxHistory))")
+                }
                 }.frame(maxWidth: 240, alignment: .leading)
                     .font(Statics.calloutFont)
             }

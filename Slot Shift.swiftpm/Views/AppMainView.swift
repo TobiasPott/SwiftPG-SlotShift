@@ -34,6 +34,11 @@ struct AppMainView: View {
                 .background(Color(.sRGB, white: 0.85, opacity: 1.0))
                 
                 AppSettingsView(game: game)
+                AppAboutView()
+//                
+//                UIPanel {
+//                    AboutSheet(isOpen: .constant(true))
+//                }.padding()
                 
             }
         }

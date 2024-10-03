@@ -1,14 +1,12 @@
 import SwiftUI
 
 class GameHandle : ObservableObject, Codable {
-    @Published var games: GameCollection = GameCollection()
+    @Published private var games: GameCollection = GameCollection()
     @Published var mode: GameMode = .none
     @Published var slot: Int = 0
-    @Published var tick: UInt
+    @Published var tick: UInt = 0
     
-    init() {
-        tick = 0
-    }
+    init() { }
     func clear() {
         games = GameCollection()
         mode = .none
@@ -33,8 +31,14 @@ class GameHandle : ObservableObject, Codable {
         tick += 1
         games.nextTurn(mode, slot, move: move)
     }
-    func getGame() -> GameBehaviour { return games.getGame(mode, slot)! }
-    func getGame(_ mode: GameMode) -> GameBehaviour { return games.getGame(mode, slot)! }
+    func getGameBehaviour() -> GameBehaviour? { return games.getGame(mode, slot) }
+    func getGameBehaviour(_ mode: GameMode) -> GameBehaviour? { return games.getGame(mode, slot) }
+    
+    func getAs<T: Mergable>() -> GameBase<T>? { return getGameBehaviour() as? GameBase<T> }
+    func getIs(_ modes: [GameMode]) -> Bool { return modes.contains { gameMode in
+        return gameMode == self.mode
+    } }
+    
     
     enum CodingKeys: String, CodingKey {
         case games, mode, slot
@@ -57,18 +61,14 @@ class GameHandle : ObservableObject, Codable {
     
     func load() {
         if let data = UserDefaults.standard.string(forKey: Statics.saveFileKey) {
-            //            print ("Loaded data for '\(Statics.saveFileKey)'")
             let decoder = JSONDecoder()
             do {
-                
                 let game = try decoder.decode(GameHandle.self, from: data.data(using: .utf8)!)
-                
                 self.tick = 0
                 self.games = game.games
                 self.setSlot(game.slot)
                 self.setMode(game.mode)
                 self.tick += 1
-                //                print ("Fully loaded game state")
                 return
                 
             } catch let DecodingError.keyNotFound(key, context) {
@@ -87,8 +87,8 @@ class GameHandle : ObservableObject, Codable {
                 print("Coding path: \(error.localizedDescription)")
             }
             
-            
         }
+        
     }
     
     func save() {

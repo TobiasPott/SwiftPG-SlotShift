@@ -1,7 +1,4 @@
 import SwiftUI
-
-
-
 extension Statics {
     static let maxHistory: Int = 15
     
@@ -10,8 +7,6 @@ extension Statics {
     
     static func getName(_ mode: GameMode) -> LocalizedStringKey { return Statics.names[mode]! }
     static func getIcon(_ mode: GameMode) -> Image { return Statics.icons[mode]! }
-    
-    
     
     static func make<T: Mergable>(_ cfg: GameConfig = .GameCfg5x5, _ repeating: Int) -> [GameBase<T>] {
         var result:[GameBase<T>] = []
@@ -23,6 +18,3 @@ extension Statics {
     }
     
 }
-
-
-

@@ -5,23 +5,24 @@ struct GameView: View {
     
     var body: some View {
         // Playfield block
-        ZStack {
-            Group { 
-                switch game.mode {
-                case .num2048_5by5: PlayfieldView(matrix: game.games.games2048_5by5[game.slot].matrix)
-                case .num2048: PlayfieldView(matrix: game.games.games2048[game.slot].matrix)
-                case .colors: PlayfieldView(matrix: game.games.gamesColors[game.slot].matrix)
-                case .none: EmptyView()
+        if let gameBehaviour = game.getGameBehaviour() {
+            ZStack {
+                Group { 
+                    // number games
+                    if game.getIs([.num2048_5by5, .num2048]), let tGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: tGame.matrix) }
+                    // color games
+                    else if game.getIs([.colors]), let tGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: tGame.matrix) }
+                    
                 }
+                .padding(18.0)
+                .squareFit()
+                
+                PlayfieldInput(game: game)
+                
             }
-            .padding(18.0)
-            .squareFit()
-            
-            PlayfieldInput(game: game)
-            
+            .padding(.bottom, 4.0)
+            .backgroundPanel()
+            .transition(.scale)
         }
-        .padding(.bottom, 4.0)
-        .backgroundPanel()
-        .transition(.scale)
     }
 }

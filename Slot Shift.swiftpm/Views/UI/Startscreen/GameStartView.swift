@@ -9,19 +9,21 @@ struct GameStartView: View {
     var body: some View {
         UIPanel {
             VStack {
-                let canContinue = gameMode != .none && game.getGame(gameMode).historyCount > 0
+                let canContinue = gameMode != .none && game.getGameBehaviour(gameMode)!.historyCount > 0
                 HStack {
-                    ButtonStyled(title: "Continue", action: {
-                        game.setMode(gameMode)
-                    }, isSelected: canContinue)
-                    .disabled(!canContinue)
+                    
+                    Group {
+                        ButtonStyled(title: "New Game", action: {
+                            game.setMode(gameMode)
+                            game.startGame(gameMode)
+                        })
+                        ButtonStyled(title: "Continue", action: {
+                            game.setMode(gameMode)
+                        }, isSelected: canContinue, color: .green)
+                        .disabled(!canContinue)
+                    }
                     .frameMax(128, 48)
                     
-                    ButtonStyled(title: "New Game", action: {
-                        game.setMode(gameMode)
-                        game.startGame(gameMode)
-                    })
-                    .frameMax(128, 48)
                 }
             }
         }

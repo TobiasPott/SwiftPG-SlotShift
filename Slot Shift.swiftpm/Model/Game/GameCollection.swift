@@ -15,7 +15,6 @@ class GameCollection : ObservableObject, Codable {
     @Published var games2048_5by5: [GameTypeNumbers] 
     @Published var games2048: [GameTypeNumbers]
     @Published var gamesColors: [GameTypeColors]
-    @Published var turnCount: Int = 0 
     
     init() {
         games2048_5by5 = Statics.make<SlotNumber>(.GameCfg5x5, 4)
@@ -33,7 +32,6 @@ class GameCollection : ObservableObject, Codable {
     }
     
     func nextTurn(_ mode: GameMode, _ slot: Int = 0, move: GameMove) {
-        turnCount += 1;
         if let game = getGame(mode, slot) { game.nextTurn(move) }
     }
     func anyEmpty(_ mode: GameMode, _ slot: Int = 0) -> Bool {
@@ -57,14 +55,13 @@ class GameCollection : ObservableObject, Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case turnCount, games_numbers_5x5, games_numbers_4x4, games_colors_5x5
+        case games_numbers_5x5, games_numbers_4x4, games_colors_5x5
     }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.games2048_5by5 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_5x5)
         self.games2048 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_4x4)
         self.gamesColors = try container.decode([GameTypeColors].self, forKey: .games_colors_5x5)
-        self.turnCount = try container.decode(Int.self, forKey: .turnCount)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -72,7 +69,6 @@ class GameCollection : ObservableObject, Codable {
         try container.encode(self.games2048_5by5, forKey: .games_numbers_5x5)
         try container.encode(self.games2048, forKey: .games_numbers_4x4)
         try container.encode(self.gamesColors, forKey: .games_colors_5x5)
-        try container.encode(self.turnCount, forKey: .turnCount)
     }
     
 }

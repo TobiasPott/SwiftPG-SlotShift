@@ -6,7 +6,7 @@ struct ButtonStyled: View {
 
     var isSelected: Bool = true    
     var withAnim: Bool = true
-
+    var color: Color = Statics.accentColor
     
     var body: some View {
         Button(title) {
@@ -14,6 +14,6 @@ struct ButtonStyled: View {
                 withAnimation { action() }
             } else { action() }
         }
-        .backgroundButton(isSelected ? Statics.accentColor : Color(.sRGB, white: 0.70, opacity: 1.0))
+        .backgroundButton(isSelected ? color : Color(.sRGB, white: 0.70, opacity: 1.0))
     }
 }

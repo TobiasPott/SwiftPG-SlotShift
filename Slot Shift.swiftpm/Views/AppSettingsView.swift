@@ -10,7 +10,7 @@ struct AppSettingsView: View {
     func hideAll() { showHeader = false; showFooter = false; }
     
     var body: some View {
-        let gearIcon = Image(systemName: "gearshape.fill").resizable().aspectRatio(1.0, contentMode: .fill)
+        let icon = Image(systemName: "gearshape.fill").resizable().aspectRatio(1.0, contentMode: .fill)
         ZStack() {
             if showHeader || showFooter {
                 Button(action: { withAnimation { hideAll() } }, label: { Rectangle().foregroundStyle(.black).opacity(0.25) })
@@ -21,7 +21,7 @@ struct AppSettingsView: View {
             HStack() {
                 VStack(alignment: .trailing) {
                     Button(action: { withAnimation { showHeader.toggle() } }, 
-                           label: { gearIcon })
+                           label: { icon })
                     .backgroundButton().frameMax(48, 48)
                     
                     if showHeader {
