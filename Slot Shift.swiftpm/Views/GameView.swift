@@ -9,9 +9,9 @@ struct GameView: View {
             ZStack {
                 Group { 
                     // number games
-                    if game.getIs([.num2048_5by5, .num2048]), let tGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: tGame.matrix) }
+                    if game.getIs([.num2048_5by5, .num2048]), let tGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: tGame.getMatrix()) }
                     // color games
-                    else if game.getIs([.colors]), let tGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: tGame.matrix) }
+                    else if game.getIs([.colors]), let tGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: tGame.getMatrix()) }
                     
                 }
                 .padding(18.0)

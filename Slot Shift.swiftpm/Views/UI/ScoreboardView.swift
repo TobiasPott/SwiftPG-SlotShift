@@ -7,29 +7,43 @@ struct ScoreboardView: View {
     var body: some View {
         
         if let gameBehaviour = game.getGameBehaviour() {
+            let score = gameBehaviour.score
+            let turnsIcon = Image(systemName: "arrow.circlepath")
+            let mergesIcon = Image(systemName: "arrow.triangle.merge")
             
-            VStack() {
-                let vSpacing: CGFloat = 6.0
-                HStack() {
-                    HStack {
-                        VStack(spacing: vSpacing) { Image(systemName: "arrow.circlepath")
-                            Text("\(gameBehaviour.turnCount)") }
+            UIPanel {
+                VStack() {
+                    HStack() {
+                        ButtonStyled(title: "\(Statics.getSlotId(game.slot))")
+                            .frameMax(32, 32)
+                            .padding(.leading, 4)
                         Spacer()
-                        VStack(spacing: vSpacing) { Image(systemName: "arrow.triangle.merge"); Text("\(gameBehaviour.mergedCount)") }
+                        VScoreView(value: score.turns, icon: turnsIcon)
+                        Spacer()
+                        VScoreView(value: score.merges, icon: mergesIcon)
+                            .padding(.trailing)
+                        MenuView(game: game)
+                    }        
+                    let noneEmpty = !gameBehaviour.anyEmpty
+                    if noneEmpty {
+                        Text("Board Full")
                     }
-                    .padding(.horizontal)                
-                    .padding(.horizontal)
-                    MenuView(game: game)
-                }
-                .padding(12.0)        
-                let noneEmpty = !gameBehaviour.anyEmpty
-                if noneEmpty {
-                    Text("Board Full")
-                }
-            }.monospaced(size: 16)
-                .padding(8.0)
-                .backgroundPanel()
-                .transition(.scale)
+                }.monospaced(size: 16)
+                    .transition(.scale)
+            }
+        }
+    }
+}
+
+struct VScoreView: View {
+    let value: Int
+    var icon: Image = Image(systemName: "arrow.circlepath")
+    
+    var body: some View {
+        let vSpacing: CGFloat = 6.0
+        VStack(spacing: vSpacing) { 
+            icon
+            Text("\(value)") 
         }
     }
 }

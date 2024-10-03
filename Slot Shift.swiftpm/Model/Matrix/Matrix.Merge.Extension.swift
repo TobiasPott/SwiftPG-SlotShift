@@ -6,15 +6,16 @@ extension Matrix where T: Equatable {
         let dest = self[dRow, dCol]
         return source.canMergeWith(dest, condition)
     }
-    
-    func merge(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) {
+    ///->Merge source and destintion and set destination to clearValue
+    private func merge(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) {
         let source = self[sRow, sCol]
         let dest = self[dRow, dCol]
         let nDest = dest.merge(source, source.Mode)
         self[dRow, dCol] = nDest            
         self[sRow, sCol] = clearValue
     }
-    func mergeIfNot(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) -> Bool {
+    ///->Merge source and destination if both not equal clearValue
+    private func mergeIfNot(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) -> Bool {
         let dest = self[dRow, dCol]
         let source = self[sRow, sCol]
         if(dest != clearValue && source != clearValue) {
@@ -23,7 +24,9 @@ extension Matrix where T: Equatable {
         }
         return false
     }
-    func mergeIf(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) -> Bool {
+    ///->Merge source and destination if both equal clearValue 
+    // ToDo: re-evaluate if condition both is wanted behaviour or only one needs to equal
+    private func mergeIf(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) -> Bool {
         let dest = self[dRow, dCol]
         let source = self[sRow, sCol]
         if(dest == clearValue && source == clearValue) {
@@ -33,6 +36,7 @@ extension Matrix where T: Equatable {
         return false
     }
     
+    ///->Merges the columns of the given index, using the mergeCondition and clearValue to merge
     func mergeColumns(by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
         if(by == 0) { return 0 }
         var result: Int = 0
@@ -41,7 +45,7 @@ extension Matrix where T: Equatable {
         }
         return result
     }
-    func mergeColumn(_ c: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
+    private func mergeColumn(_ c: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
         if(by == 0) { return 0 }
         var result: Int = 0
         // make rows index array (reverse if necessary)
@@ -61,7 +65,7 @@ extension Matrix where T: Equatable {
         return result
     }
     
-    
+    ///->Merges the row of the given index, using the mergeCondition and clearValue to merge
     func mergeRows(by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
         if(by == 0) { return 0 }
         var result: Int = 0
@@ -70,7 +74,7 @@ extension Matrix where T: Equatable {
         }        
         return result
     }
-    func mergeRow(_ r: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
+    private func mergeRow(_ r: Int, by: Int, condition: MergeCondition, _ clearWith: T) -> Int {
         if(by == 0) { return 0 }
         var result: Int = 0
         // make rows index array (reverse if necessary)

@@ -12,15 +12,6 @@ class Matrix<T: Mergable> : ObservableObject, Codable {
     func indexIsValid(row: Int, column: Int) -> Bool {
         return row >= 0 && row < size.rows && column >= 0 && column < size.columns
     }
-    
-    func swap(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int) {
-        let tmp: T = self[sRow, sCol]
-        self[sRow, sCol] = self[dRow, dCol]
-        self[dRow, dCol] = tmp
-    }
-    func clear(baseValue: T) {
-        data = Array(repeating: baseValue, count: size.rows * size.columns)   
-    }
     subscript(row: Int, column: Int) -> T {
         get {
             assert(indexIsValid(row: row, column: column), "Index out of range")
@@ -30,6 +21,16 @@ class Matrix<T: Mergable> : ObservableObject, Codable {
             assert(indexIsValid(row: row, column: column), "Index out of range")
             data[(row * size.columns) + column] = newValue
         }
+    }
+    
+    func swap(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int) {
+        let tmp: T = self[sRow, sCol]
+        self[sRow, sCol] = self[dRow, dCol]
+        self[dRow, dCol] = tmp
+    }
+    
+    func clear(baseValue: T) {
+        data = Array(repeating: baseValue, count: size.rows * size.columns)   
     }
     
     func shiftDown(condition: MergeCondition = .none,_ clearValue: T) -> Int {
@@ -80,7 +81,6 @@ class Matrix<T: Mergable> : ObservableObject, Codable {
         self.size = try container.decode(MatrixSize.self, forKey: .size)
         self.data = try container.decode(Data.self, forKey: .data)
     }
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.size, forKey: .size)

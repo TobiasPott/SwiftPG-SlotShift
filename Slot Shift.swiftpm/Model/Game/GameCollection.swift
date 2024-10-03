@@ -4,8 +4,7 @@ struct GameConfig: Codable {
     static let GameCfg5x5: GameConfig = .init(rows: 5, columns: 5)
     static let GameCfg4x4: GameConfig = .init(rows: 4, columns: 4)
     
-    let rows: Int
-    let columns: Int
+    let rows, columns: Int
 }
 
 class GameCollection : ObservableObject, Codable {
@@ -42,7 +41,7 @@ class GameCollection : ObservableObject, Codable {
         if let game = getGame(mode, slot) { game.revert() }
     } 
     func getTurnCount(_ mode: GameMode, _ slot: Int = 0) -> Int {
-        if let game = getGame(mode, slot) { return game.turnCount }
+        if let game = getGame(mode, slot) { return game.score.turns }
         return 0
     }
     func getHistoryCount(_ mode: GameMode, _ slot: Int = 0) -> Int {
@@ -50,7 +49,7 @@ class GameCollection : ObservableObject, Codable {
         return 0
     }
     func getMergedCount(_ mode: GameMode, _ slot: Int = 0) -> Int {
-        if let game = getGame(mode, slot) { return game.mergedCount }
+        if let game = getGame(mode, slot) { return game.score.merges }
         return 0
     }
     

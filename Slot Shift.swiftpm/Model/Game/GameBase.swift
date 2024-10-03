@@ -9,24 +9,26 @@ enum GameMove {
     case SY_newGame, SY_reset 
 }
 
+struct GameScore: Codable {
+    public var turns: Int = 0
+    public var slots: Int = 0
+    public var merges: Int = 0
+}
+
 class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     typealias M = Matrix<S>
     typealias H = [M.Data]
     
-    @Published public var matrix: M
-    @Published var history: H
+    @Published internal var matrix: M
+    @Published internal var history: H
     
     @Published public var mergeCondition: MergeCondition = .matchRGB
     @Published public var mergeMode: MergeMode = .add
+    @Published public var score: GameScore = GameScore()
     
-    @Published public var turnCount: Int = 0
-    @Published public var slotCount: Int = 0
-    @Published public var mergedCount: Int = 0
     public var historyCount: Int { get { return history.count } }
     public var anyEmpty: Bool { return matrix.anyEmpty() }
     
-    public var rows: Int { return matrix.size.rows }
-    public var columns: Int { return matrix.size.columns }
     
     required init(_ cfg: GameConfig) {
         self.matrix = .init(rows: cfg.rows, columns: cfg.columns, baseValue: .empty)
@@ -44,7 +46,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         case .SY_newGame: newGame()
         case .SY_reset: reset()
         default:
-            turnCount += 1   
+            score.turns += 1   
         }
     }
     
@@ -60,17 +62,15 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
             _ = history.remove(at: history.count-1)
             
             if(mergeDiff >= 0) {
-                mergedCount -= (mergeDiff)
+                score.merges -= (mergeDiff)
             }
-            print("Revert: \(history.count) \(mergeDiff)")
+//            print("Revert: \(history.count) \(mergeDiff)")
         }
     }
     internal func reset() {
         matrix.clear(baseValue: .empty)
         history = []
-        turnCount = 0
-        slotCount = 0
-        mergedCount = 0
+        score = GameScore()
     }
     internal func prepareMove() {
         history.append(matrix.data)
@@ -79,11 +79,12 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     }
     internal func finalizeMove() {
         move_FillSlot()
-        turnCount += 1
+        score.turns += 1
     }
+    func getMatrix() -> M { return matrix }
     
     enum CodingKeys: CodingKey {
-        case matrix, history, mergeCondition, mergeMode, turnCount, slotCount, mergedCount
+        case matrix, history, mergeCondition, mergeMode, score
     }
     
     required init(from decoder: Decoder) throws {
@@ -94,9 +95,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         self.mergeCondition = try container.decode(MergeCondition.self, forKey: .mergeCondition)  
         self.mergeMode = try container.decode(MergeMode.self, forKey: .mergeMode)
         
-        self.turnCount = try container.decode(Int.self, forKey: .turnCount)
-        self.slotCount = try container.decode(Int.self, forKey: .slotCount)
-        self.mergedCount = try container.decode(Int.self, forKey: .mergedCount)
+        self.score = try container.decode(GameScore.self, forKey: .score)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -106,10 +105,8 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         
         try container.encode(self.mergeCondition, forKey: .mergeCondition)
         try container.encode(self.mergeMode, forKey: .mergeMode)
-        
-        try container.encode(self.turnCount, forKey: .turnCount)
-        try container.encode(self.slotCount, forKey: .slotCount)
-        try container.encode(self.mergedCount, forKey: .mergedCount)
+
+        try container.encode(self.score, forKey: .score)
     }
     
 }

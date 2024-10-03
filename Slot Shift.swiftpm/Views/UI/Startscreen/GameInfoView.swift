@@ -12,8 +12,9 @@ struct GameInfoView: View {
                 VStack(alignment: .leading) {
                     Text("Slot \(game.slot)").fontWeight(.bold)
                     if let gameBehaviour = game.getGameBehaviour(gameMode) {
-                        Text("Turns  \t\t\(gameBehaviour.turnCount)")
-                        Text("Merged \t\t\(gameBehaviour.mergedCount)")
+                        let score = gameBehaviour.score
+                        Text("Turns  \t\t\(score.turns)")
+                        Text("Merged \t\t\(score.merges)")
                         Text("History\t\t\(gameBehaviour.historyCount) (max: \(Statics.maxHistory))")
                 }
                 }.frame(maxWidth: 240, alignment: .leading)

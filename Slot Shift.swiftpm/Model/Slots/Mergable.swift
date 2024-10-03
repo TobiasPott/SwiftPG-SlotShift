@@ -30,7 +30,6 @@ protocol Mergable : Equatable, Codable {
 }
 
 extension Mergable {
-    
     func merge(_ other: Self, _ mode: MergeMode) -> Self {
         switch mode {
         case .add:         return self + other
@@ -41,4 +40,16 @@ extension Mergable {
         case .clear:       return .empty
         }
     }   
+}
+extension Array where Element: Mergable {
+    func getEmptyCount() -> Int {
+        var result: Int = 0
+        for i in 0..<count {
+            if(self[i].isEmpty) {
+                result += 1
+            }
+        }
+        return result
+    }
+    
 }
