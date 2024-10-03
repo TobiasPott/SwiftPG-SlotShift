@@ -3,6 +3,7 @@ import SwiftUI
 struct GameSlotView: View {
     @ObservedObject var game: GameHandle
     
+    static private let slotIds: [String] = ["I", "II", "III", "IV"]
     
     var body: some View {
         UIPanel {
@@ -10,10 +11,11 @@ struct GameSlotView: View {
                 HStack { Text("Select a game slot").font(Statics.titleFont) }
                 HStack(spacing: 16) {
                     ForEach(0..<4) { i in
-                        ButtonStyled(title: "\(i)", action: { 
+                        ButtonStyled(title: "\(GameSlotView.slotIds[i])", action: { 
                             game.setSlot(i)
                         }, isSelected: game.slot == i, withAnim: false)
-                        .frame(maxWidth: 48)
+                        .aspectRatio(1.0, contentMode: .fill)
+                        .frame(maxWidth: 48.0)
                     }
                 }
                 .frame(maxHeight: 48.0)

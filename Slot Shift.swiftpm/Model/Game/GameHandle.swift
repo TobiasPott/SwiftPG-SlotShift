@@ -9,6 +9,12 @@ class GameHandle : ObservableObject, Codable {
     init() {
         tick = 0
     }
+    func clear() {
+        games = GameCollection()
+        mode = .none
+        slot = 0
+        tick = 0
+    }
     func startGame(_ newMode: GameMode) { 
         setMode(newMode)
         nextTurn(.SY_newGame)

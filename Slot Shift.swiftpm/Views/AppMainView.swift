@@ -4,7 +4,7 @@ struct AppMainView: View {
     
     @StateObject var game: GameHandle = GameHandle()
     @State var gameSlot: Int = 0
-    @State var showSettings: Bool = false
+    @State var showStartscreen: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -18,13 +18,14 @@ struct AppMainView: View {
                         
                         Stack(layout: isWide ? .horizontal : .vertical, content: {
                             Group { 
-                                title
+                                Button(action: { withAnimation { showStartscreen = true } }, label: { title } ).foregroundStyle(.primary)
                                 scoreboard.isHidden(game.mode == .none)
                             }
                         }, verticalAlignment: .bottom, horizontalAlignment: .center)
-                        
-                        if game.mode == .none { StartscreenView(game: game) } 
-                        else { GameView(game: game) }
+                        if showStartscreen {
+                            if game.mode == .none { StartscreenView(game: game) } 
+                            else { GameView(game: game) }
+                        }
                         
                     }
                     .frame(maxWidth: 600.0, maxHeight: .infinity)

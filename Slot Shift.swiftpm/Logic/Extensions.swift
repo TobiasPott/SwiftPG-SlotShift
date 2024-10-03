@@ -34,7 +34,7 @@ extension View {
                 inputBG
                     .padding(.bottom, 4)
             }.colorMultiply(color).shadowDrop(y: 2.5)
-            self.padding(10)
+            self.padding(8)
                 .padding(.bottom, 4)
         }.foregroundStyle(Color.primary)
         return stack
