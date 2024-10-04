@@ -1,5 +1,10 @@
 import SwiftUI
 
+extension Texts {
+    
+    static let source_appmainview: String = """
+import SwiftUI
+
 struct AppMainView: View {
     
     @StateObject var game: GameHandle = GameHandle()
@@ -11,7 +16,7 @@ struct AppMainView: View {
             
             ZStack {
                 // background source code display
-                SourceCodeView(sourceCode: game.mode == .none ? Texts.source_appmainview : Texts.source_gameview)
+                SourceCodeView(sourceCode: Texts.source_appmainview)
                 
                 // splash, startscreen and game view depending on game state
                 VStack(spacing: 16.0) {
@@ -38,4 +43,6 @@ struct AppMainView: View {
                    perform: { output in /* Code to run on will terminate */ game.save() })
         
     }
+}
+"""
 }

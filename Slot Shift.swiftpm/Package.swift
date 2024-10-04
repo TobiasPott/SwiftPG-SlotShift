@@ -18,8 +18,8 @@ let package = Package(
             targets: ["AppModule"],
             bundleIdentifier: "de.tobiaspott.playground.slotshift",
             teamIdentifier: "LR2W97LX43",
-            displayVersion: "0.1",
-            bundleVersion: "7",
+            displayVersion: "0.2",
+            bundleVersion: "8",
             appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.brown),
             supportedDeviceFamilies: [
