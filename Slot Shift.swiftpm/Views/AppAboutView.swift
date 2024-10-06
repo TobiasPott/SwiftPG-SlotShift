@@ -15,7 +15,7 @@ struct AppAboutView: View {
         let str_b0_title: LocalizedStringKey = "About Slot Shift"
         let str_b0_p0: LocalizedStringKey = "Welcome to Slot Shift. \nA 2048 inspired game and learning project."
         let str_b0_p1: LocalizedStringKey = "Slot Shift is another app which I started development on to understand how it works and get a gist of how I would do it. Not it has reached a state I am comfortable with showing and sharing."
-        let str_b0_p2: LocalizedStringKey = "You can check out the project's complete source code and asset files on github. You are free to make your own version and adopt the project as your own."
+        let str_b0_p2: LocalizedStringKey = "You can check out the project's complete source code and asset files on github. You are free to make your own version and adopt the project as your own. I hope you can learn from it."
         
         let str_b1_title: LocalizedStringKey = "My Plea to You"
         let str_b1_p0: LocalizedStringKey = "I'm working for fun on this app and want to share it with the world. Thus I have no direct need to monitize this app."
@@ -43,6 +43,11 @@ struct AppAboutView: View {
                                         Text(str_b0_p0).padding(Edge.Set.bottom, 3.0)
                                         Text(str_b0_p1).padding(Edge.Set.bottom, 3.0)
                                         Text(str_b0_p2).padding(Edge.Set.bottom, 3.0)
+                                        Link(destination: URL(string: "https://github.com/TobiasPott/SwiftPG-SlotShift")!) {
+                                            
+                                            Text("GitHub Repository")
+                                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                                        }
                                     }
                                     
                                     Image(systemName: "heart.circle")

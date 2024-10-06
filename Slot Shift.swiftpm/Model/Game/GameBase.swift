@@ -62,7 +62,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
             _ = history.remove(at: history.count-1)
             
             if(mergeDiff >= 0) {
-                score.merges -= (mergeDiff)
+                score.merges -= (mergeDiff+1)
             }
 //            print("Revert: \(history.count) \(mergeDiff)")
         }
