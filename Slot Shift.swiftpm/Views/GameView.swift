@@ -7,16 +7,15 @@ struct GameView: View {
         // Playfield block
         if let gameBehaviour = game.getGameBehaviour() {
             ZStack {
-                Group { 
+                VStack {
                     // number games
-                    if game.getIs([.num2048_5by5, .num2048]), let tGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: tGame.getMatrix()) }
+                    if game.getIs([.num2048_5by5, .num2048]), let nGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: nGame.getMatrix()) }
                     // color games
-                    else if game.getIs([.colors]), let tGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: tGame.getMatrix()) }
-                    
+                    if game.getIs([.colors]), let cGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: cGame.getMatrix()) }
                 }
                 .padding(18.0)
-                .squareFit()
-                
+                .frameInfinity()
+                .squareFit()   
                 PlayfieldInput(game: game)
                 
             }

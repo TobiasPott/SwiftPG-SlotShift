@@ -4,7 +4,7 @@ struct GameStartView: View {
     
     @ObservedObject var game: GameHandle = GameHandle()
     
-    var gameMode: GameMode = .num2048_5by5
+    var gameMode: GameMode = .colors
     
     var body: some View {
         UIPanel {

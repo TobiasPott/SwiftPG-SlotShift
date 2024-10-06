@@ -2,7 +2,6 @@ import SwiftUI
 
 struct PlayfieldView<S: Mergable>: View {
     
-//    @ObservedObject var game: GameBehaviourT<S>;
     @ObservedObject var matrix: Matrix<S>;
     var slotSpacing: CGFloat = 6.0
     

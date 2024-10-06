@@ -9,7 +9,7 @@ struct GameConfig: Codable {
 
 class GameCollection : ObservableObject, Codable {
     typealias GameTypeNumbers = GameBase<SlotNumber>
-    typealias GameTypeColors = GameBase<SlotNumber>
+    typealias GameTypeColors = GameBase<SlotRGB>
     
     @Published var games2048_5by5: [GameTypeNumbers] 
     @Published var games2048: [GameTypeNumbers]
