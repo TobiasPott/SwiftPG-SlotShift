@@ -16,15 +16,15 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     @Published internal var matrix: M
     @Published internal var history: H
     
-    @Published public var mergeCondition: MergeCondition = .match
-    @Published public var mergeMode: MergeMode = .add
     @Published public var score: GameScore = GameScore()
+    public let config: GameConfig
     
     public var historyCount: Int { get { return history.count } }
     public var anyEmpty: Bool { return matrix.anyEmpty() }
     
     
     required init(_ cfg: GameConfig) {
+        self.config = cfg;
         self.matrix = .init(rows: cfg.rows, columns: cfg.columns, baseValue: .empty)
         self.history = []
     }
@@ -78,7 +78,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     func getMatrix() -> M { return matrix }
     
     enum CodingKeys: CodingKey {
-        case matrix, history, mergeCondition, mergeMode, score
+        case matrix, history, mergeCondition, mergeMode, score, config
     }
     
     required init(from decoder: Decoder) throws {
@@ -86,10 +86,8 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         self.matrix = try container.decode(M.self, forKey: .matrix)
         self.history = try container.decode(H.self, forKey: .history)
         
-        self.mergeCondition = try container.decode(MergeCondition.self, forKey: .mergeCondition)  
-        self.mergeMode = try container.decode(MergeMode.self, forKey: .mergeMode)
-        
         self.score = try container.decode(GameScore.self, forKey: .score)
+        self.config = try container.decode(GameConfig.self, forKey: .config)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -97,10 +95,8 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         try container.encode(self.matrix, forKey: .matrix)
         try container.encode(self.history, forKey: .history)
         
-        try container.encode(self.mergeCondition, forKey: .mergeCondition)
-        try container.encode(self.mergeMode, forKey: .mergeMode)
-
         try container.encode(self.score, forKey: .score)
+        try container.encode(self.config, forKey: .config)
     }
     
 }

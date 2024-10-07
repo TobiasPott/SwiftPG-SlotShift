@@ -26,30 +26,22 @@ struct SlotRGB: Mergable {
     }
     
     var asColor: Color {
-        return Color(.sRGB, red: Double(red) / 255.0, green: Double(green) / 255.0, blue: Double(blue) / 255.0, opacity: Double(alpha) / 255.0)
+        return Color(.sRGB, red: Double(red) / 255.0, green: Double(green) / 255.0, blue: Double(blue) / 255.0, opacity: 1.0)
     }
     var asView: some View {
         return ZStack {
-            let isNotClear: Bool = Mode != .clear
             numberView
-                .backgroundButton(isNotClear ? asColor : Color.white.opacity(0.5))
+                .backgroundButton(asColor.opacity(0.5))
         }
         .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)
     }
     var numberView: some View {
-        let isNotClear: Bool = Mode != .clear
         return VStack(spacing: 0) {
-            if isNotClear {
-                asColor
-//                HStack(alignment: .firstTextBaseline, spacing: 0) {
-//                    Text("\(red)").monospacedScaledToFit()
-//                }
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
             }
         }
-        .frameInfinity(.bottomTrailing)
     }
-    
 }
 
 // Static members

@@ -11,7 +11,7 @@ class GameCollection : ObservableObject, Codable {
     init() {
         games2048_5by5 = Statics.make<Slot2048>(.GameCfg5x5, 4)
         games2048 = Statics.make<Slot2048>(.GameCfg4x4, 4)
-        gamesColors = Statics.make<SlotRGB>(.GameCfg5x5, 4)
+        gamesColors = Statics.make<SlotRGB>(.colorsCfg5x5, 4)
     }
     
     func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {

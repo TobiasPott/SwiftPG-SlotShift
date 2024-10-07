@@ -11,6 +11,7 @@ extension Matrix where T: Equatable {
         let source = self[sRow, sCol]
         let dest = self[dRow, dCol]
         let nDest = dest.merge(source, source.Mode)
+        print("merge: \(source.Mode)")
         self[dRow, dCol] = nDest            
         self[sRow, sCol] = clearValue
     }
