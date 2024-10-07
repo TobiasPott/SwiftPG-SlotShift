@@ -9,12 +9,6 @@ enum GameMove {
     case SY_newGame, SY_reset 
 }
 
-struct GameScore: Codable {
-    public var turns: Int = 0
-    public var slots: Int = 0
-    public var merges: Int = 0
-}
-
 class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     typealias M = Matrix<S>
     typealias H = [M.Data]
@@ -22,7 +16,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     @Published internal var matrix: M
     @Published internal var history: H
     
-    @Published public var mergeCondition: MergeCondition = .matchRGB
+    @Published public var mergeCondition: MergeCondition = .match
     @Published public var mergeMode: MergeMode = .add
     @Published public var score: GameScore = GameScore()
     

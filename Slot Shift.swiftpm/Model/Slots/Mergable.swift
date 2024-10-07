@@ -2,7 +2,7 @@ import SwiftUI
 
 
 enum MergeCondition: Int, Codable {
-    case none, matchRGB, match
+    case none, match
 }
 enum MergeMode: Int, Codable {
     case add, subtract, half, double, replace, clear

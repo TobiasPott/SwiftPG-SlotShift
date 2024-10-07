@@ -4,21 +4,19 @@ struct GameStartView: View {
     
     @ObservedObject var game: GameHandle = GameHandle()
     
-    var gameMode: GameMode = .colors
-    
     var body: some View {
         UIPanel {
             VStack {
-                let canContinue = gameMode != .none && game.getGameBehaviour(gameMode)!.historyCount > 0
+                let canContinue = game.selectedMode != .none && game.getGameBehaviour(game.selectedMode)!.historyCount > 0
                 HStack {
                     
                     Group {
                         ButtonStyled(title: "New Game", action: {
-                            game.setMode(gameMode)
-                            game.startGame(gameMode)
+                            game.setMode(game.selectedMode)
+                            game.startGame(game.selectedMode)
                         })
                         ButtonStyled(title: "Continue", action: {
-                            game.setMode(gameMode)
+                            game.setMode(game.selectedMode)
                         }, isSelected: canContinue, color: .green)
                         .disabled(!canContinue)
                     }

@@ -3,6 +3,8 @@ import SwiftUI
 class GameHandle : ObservableObject, Codable {
     @Published private var games: GameCollection = GameCollection()
     @Published var mode: GameMode = .none
+    @Published var selectedMode: GameMode = .colors
+    
     @Published var slot: Int = 0
     @Published var tick: UInt = 0
     
@@ -10,8 +12,10 @@ class GameHandle : ObservableObject, Codable {
     func clear() {
         games = GameCollection()
         mode = .none
+        selectedMode = .none
         slot = 0
         tick = 0
+        UserDefaults.standard.set("{}", forKey: Statics.saveFileKey)
     }
     func startGame(_ newMode: GameMode) { 
         setMode(newMode)
@@ -38,16 +42,20 @@ class GameHandle : ObservableObject, Codable {
     func getIs(_ modes: [GameMode]) -> Bool { return modes.contains { gameMode in
         return gameMode == self.mode
     } }
+    func getIsSelected(_ modes: [GameMode]) -> Bool { return modes.contains { gameMode in
+        return gameMode == self.selectedMode
+    } }
     
     
     enum CodingKeys: String, CodingKey {
-        case games, mode, slot
+        case games, mode, selectedMode, slot
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.games = try container.decode(GameCollection.self, forKey: .games)
         self.mode = try container.decode(GameMode.self, forKey: .mode)
+        self.selectedMode = try container.decode(GameMode.self, forKey: .selectedMode)
         self.slot = try container.decode(Int.self, forKey: .slot)
         self.tick = 0
     }
@@ -56,6 +64,7 @@ class GameHandle : ObservableObject, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.games, forKey: .games)
         try container.encode(self.mode, forKey: .mode)
+        try container.encode(self.selectedMode, forKey: .selectedMode)
         try container.encode(self.slot, forKey: .slot)
     }
     
@@ -66,6 +75,7 @@ class GameHandle : ObservableObject, Codable {
                 let game = try decoder.decode(GameHandle.self, from: data.data(using: .utf8)!)
                 self.tick = 0
                 self.games = game.games
+                self.selectedMode = game.selectedMode
                 self.setSlot(game.slot)
                 self.setMode(game.mode)
                 self.tick += 1
@@ -74,17 +84,22 @@ class GameHandle : ObservableObject, Codable {
             } catch let DecodingError.keyNotFound(key, context) {
                 print("Decoding error (keyNotFound): \(key) not found in \(context.debugDescription)")
                 print("Coding path: \(context.codingPath)")
+                save()
             } catch let DecodingError.dataCorrupted(context) {
                 print("Decoding error (dataCorrupted): data corrupted in \(context.debugDescription)")
                 print("Coding path: \(context.codingPath)")
+                save()
             } catch let DecodingError.typeMismatch(type, context) {
                 print("Decoding error (typeMismatch): type mismatch of \(type) in \(context.debugDescription)")
                 print("Coding path: \(context.codingPath)")
+                save()
             } catch let DecodingError.valueNotFound(type, context) {
                 print("Decoding error (valueNotFound): value not found for \(type) in \(context.debugDescription)")
                 print("Coding path: \(context.codingPath)")
+                save()
             } catch let error {
                 print("Coding path: \(error.localizedDescription)")
+                save()
             }
             
         }
@@ -93,6 +108,7 @@ class GameHandle : ObservableObject, Codable {
     
     func save() {
         if let encoded = try? JSONEncoder().encode(self) {
+            print("Game saved.")
             UserDefaults.standard.set(String(data: encoded, encoding: .utf8)!, forKey: Statics.saveFileKey)
         }
     }

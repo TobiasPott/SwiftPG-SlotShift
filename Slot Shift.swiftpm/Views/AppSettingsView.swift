@@ -31,9 +31,9 @@ struct AppSettingsView: View {
                                 Text("Change Mode")
                                 Group {
                                     // ToDo: add function to start/continue game if mode is set
-                                    ButtonStyled(title: "2048 (5 x 5)", action: { game.setMode(.num2048_5by5); hideAll() }, isSelected: game.getIs([.num2048_5by5]))
-                                    ButtonStyled(title: "2048 (4 x 4)", action: { game.setMode(.num2048); hideAll() }, isSelected: game.getIs([.num2048]))
-                                    ButtonStyled(title: "Colors (5 x 5)", action: { game.setMode(.colors); hideAll() }, isSelected: game.getIs([.colors]))
+                                    ButtonStyled(title: "2048 (5 x 5)", action: { game.selectedMode = .num2048_5by5; hideAll() }, isSelected: game.getIsSelected([.num2048_5by5]))
+                                    ButtonStyled(title: "2048 (4 x 4)", action: { game.selectedMode = .num2048; hideAll() }, isSelected: game.getIsSelected([.num2048]))
+                                    ButtonStyled(title: "Colors (5 x 5)", action: { game.selectedMode = .colors; hideAll() }, isSelected: game.getIsSelected([.colors]))
                                 }                                        
                                 .frame(maxHeight: 32.0)
 //                                .disabled(true)

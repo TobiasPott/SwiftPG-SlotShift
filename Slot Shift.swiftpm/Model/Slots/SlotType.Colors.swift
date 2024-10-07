@@ -20,9 +20,8 @@ struct SlotRGB: Mergable {
     
     func canMergeWith(_ other: Self, _ condition: MergeCondition) -> Bool {
         switch condition {
-        case .match:       return self == other
-        case .matchRGB:    return self.red == other.red && self.green == other.green && self.blue == other.blue    
-        default:           return true
+        case .match:       return self.red == other.red && self.green == other.green && self.blue == other.blue   
+        default:           return false
         }
     }
     

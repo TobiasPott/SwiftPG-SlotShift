@@ -1,14 +1,7 @@
 import SwiftUI
 
-struct GameConfig: Codable {
-    static let GameCfg5x5: GameConfig = .init(rows: 5, columns: 5)
-    static let GameCfg4x4: GameConfig = .init(rows: 4, columns: 4)
-    
-    let rows, columns: Int
-}
-
 class GameCollection : ObservableObject, Codable {
-    typealias GameTypeNumbers = GameBase<SlotNumber>
+    typealias GameTypeNumbers = GameBase<Slot2048>
     typealias GameTypeColors = GameBase<SlotRGB>
     
     @Published var games2048_5by5: [GameTypeNumbers] 
@@ -16,8 +9,8 @@ class GameCollection : ObservableObject, Codable {
     @Published var gamesColors: [GameTypeColors]
     
     init() {
-        games2048_5by5 = Statics.make<SlotNumber>(.GameCfg5x5, 4)
-        games2048 = Statics.make<SlotNumber>(.GameCfg4x4, 4)
+        games2048_5by5 = Statics.make<Slot2048>(.GameCfg5x5, 4)
+        games2048 = Statics.make<Slot2048>(.GameCfg4x4, 4)
         gamesColors = Statics.make<SlotRGB>(.GameCfg5x5, 4)
     }
     

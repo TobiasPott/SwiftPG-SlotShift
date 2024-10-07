@@ -9,7 +9,7 @@ struct GameView: View {
             ZStack {
                 VStack {
                     // number games
-                    if game.getIs([.num2048_5by5, .num2048]), let nGame = gameBehaviour as? GameBase<SlotNumber> { PlayfieldView(matrix: nGame.getMatrix()) }
+                    if game.getIs([.num2048_5by5, .num2048]), let nGame = gameBehaviour as? GameBase<Slot2048> { PlayfieldView(matrix: nGame.getMatrix()) }
                     // color games
                     if game.getIs([.colors]), let cGame = gameBehaviour as? GameBase<SlotRGB> { PlayfieldView(matrix: cGame.getMatrix()) }
                 }
