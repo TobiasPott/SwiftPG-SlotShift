@@ -8,7 +8,7 @@ struct TitleboardView: View {
             UIPanel {
                 Group{
                     HStack(alignment: .center) {
-                        Image("SwiftPG-BlockShift-TitleIcon").resizable().aspectRatio(1.0, contentMode: .fit)
+                        Image("SwiftPG-SlotShift-TitleIcon").resizable().aspectRatio(1.0, contentMode: .fit)
                             .shadowDrop(radius: 2.5, x: 0, y: 3.0)
                         VStack {
                             Text("Slot Shift").fontWeight(.bold)

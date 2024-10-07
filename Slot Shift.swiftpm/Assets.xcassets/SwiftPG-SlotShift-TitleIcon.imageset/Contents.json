@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "SwiftPG-SlotShift-TitleIcon.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
