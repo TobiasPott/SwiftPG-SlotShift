@@ -19,8 +19,8 @@ struct AppMainView: View {
                     if game.mode == .none { StartscreenView(game: game) } 
                     else { GameView(game: game) }
                 }
-                .frameMax(600.0, .infinity)
                 .padding(.horizontal)
+                
                 
                 // 'overlay/popover' settings and about views
                 AppSettingsView(game: game)

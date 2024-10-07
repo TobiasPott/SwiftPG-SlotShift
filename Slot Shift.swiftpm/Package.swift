@@ -10,7 +10,7 @@ import AppleProductTypes
 let package = Package(
     name: "Slot Shift",
     platforms: [
-        .iOS("15.6")
+        .iOS("16.0")
     ],
     products: [
         .iOSApplication(

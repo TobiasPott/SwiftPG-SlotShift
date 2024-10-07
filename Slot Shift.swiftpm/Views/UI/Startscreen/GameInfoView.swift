@@ -2,16 +2,15 @@ import SwiftUI
 
 struct GameInfoView: View {
     @ObservedObject var game: GameHandle
-    let gameMode: GameMode
     let gameSlot: Int
     
     var body: some View {
         
-        if gameMode != .none {
+        if game.selectedMode != .none {
             UIPanel {
                 VStack(alignment: .leading) {
                     Text("Slot \(game.slot)").fontWeight(.bold)
-                    if let gameBehaviour = game.getGameBehaviour(gameMode) {
+                    if let gameBehaviour = game.getGameBehaviour(game.selectedMode) {
                         let score = gameBehaviour.score
                         Text("Turns  \t\(score.turns)")
                         Text("Merged \t\(score.merges)")
