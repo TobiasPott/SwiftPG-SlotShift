@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct UIPanel<Content: View>: View {
+    var color: Color = Statics.accentColor
     var content: () -> Content
     
     var body: some View {
@@ -8,7 +9,7 @@ struct UIPanel<Content: View>: View {
             .padding()
             .padding(.vertical, 6.0)
             .padding(.horizontal, 6.0)
-            .backgroundPanel()
+            .backgroundPanel(color)
             .font(Statics.bodyFont)
         
     }

@@ -4,7 +4,7 @@ struct GameModeView: View {
     @Binding var mode: GameMode
     
     var body: some View {
-        UIPanel {
+        UIPanel(content:  {
             VStack() {
                 // header
                 HStack {
@@ -34,7 +34,7 @@ struct GameModeView: View {
                 .padding(.horizontal, -8)
                 .padding(.bottom, -8)
             }         
-        }
+        })
         
     }
 }

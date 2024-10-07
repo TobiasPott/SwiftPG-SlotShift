@@ -8,7 +8,7 @@ extension Statics {
     
     
     static private let icons: [GameMode: Image] = [.num2048: icon_2048_4x4, .num2048_5by5: icon_2048_5x5, .colors: icon_colors_5x5]
-    static private let names: [GameMode:LocalizedStringKey] = [.none: "None", .num2048_5by5: "2048 (5 x 5)", .num2048: "2048 (Classic)", .colors: "Color (5 x 5)"]
+    static private let names: [GameMode:LocalizedStringKey] = [.none: "None", .num2048_5by5: "Numbers (5 x 5)", .num2048: "Numbers (4 x 4)", .colors: "Color (5 x 5)"]
     static private let slotIds: [String] = ["I", "II", "III", "IV"]
     
     
