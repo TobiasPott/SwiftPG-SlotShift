@@ -8,8 +8,12 @@ struct GameInfoView: View {
         
         if game.selectedMode != .none {
             UIPanel {
+                
                 VStack(alignment: .leading) {
-                    Text("Slot \(game.slot)").fontWeight(.bold)
+                    Text("Slot \(Statics.getSlotId(game.slot))")
+                        .font(Statics.calloutFont)
+                        .fontWeight(.bold)
+                        .padding(.bottom, 8)
                     if let gameBehaviour = game.getGameBehaviour(game.selectedMode) {
                         let score = gameBehaviour.score
                         Text("Turns  \t\(score.turns)")
@@ -17,7 +21,7 @@ struct GameInfoView: View {
                         Text("History\t\(gameBehaviour.historyCount) (max: \(Statics.maxHistory))")
                     }
                 }.frame(maxWidth: 240, alignment: .leading)
-                    .font(Statics.calloutFont)
+                    .font(Statics.captionFont)
             }
         }
         

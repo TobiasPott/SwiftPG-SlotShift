@@ -11,7 +11,7 @@ struct SplashscreenView: View {
         Stack(layout: isWide ? .horizontal : .vertical, content: {
             Group { 
                 Button(action: { withAnimation { game.tick = 1 } }, label: { title } ).foregroundStyle(.primary)
-                scoreboard.isHidden(game.mode == .none)
+                scoreboard.isHidden(game.mode == .none, remove: true)
             }
         }, verticalAlignment: .bottom, horizontalAlignment: .center)
     }

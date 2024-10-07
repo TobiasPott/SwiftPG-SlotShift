@@ -16,11 +16,13 @@ struct AppMainView: View {
                 // splash, startscreen and game view depending on game state
                 VStack(spacing: 16.0) {
                     SplashscreenView(game: game, isWide: isWide)
-                    if game.mode == .none { StartscreenView(game: game) } 
+                    if game.mode == .none { StartscreenView(game: game, isWide: isWide) } 
                     else { GameView(game: game) }
                 }
+                .frame(maxWidth: 720.0)
+                .frame(maxHeight: .infinity)
                 .padding(.horizontal)
-                
+                .padding(.vertical)
                 
                 // 'overlay/popover' settings and about views
                 AppSettingsView(game: game)

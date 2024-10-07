@@ -1,9 +1,11 @@
 import SwiftUI
 
 class GameHandle : ObservableObject, Codable {
+    static private let defaultGameMode: GameMode = .colors
+    
     @Published private var games: GameCollection = GameCollection()
     @Published var mode: GameMode = .none
-    @Published var selectedMode: GameMode = .colors
+    @Published var selectedMode: GameMode = defaultGameMode
     
     @Published var slot: Int = 0
     @Published var tick: UInt = 0
@@ -12,7 +14,7 @@ class GameHandle : ObservableObject, Codable {
     func clear() {
         games = GameCollection()
         mode = .none
-        selectedMode = .none
+        selectedMode = GameHandle.defaultGameMode
         slot = 0
         tick = 0
         UserDefaults.standard.set("{}", forKey: Statics.saveFileKey)

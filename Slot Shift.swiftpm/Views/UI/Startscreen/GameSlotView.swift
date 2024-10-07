@@ -18,6 +18,7 @@ struct GameSlotView: View {
                             ForEach(0..<2, id: \.self) { i in
                                 let index = r*2 + i
                                 ButtonStyled(title: "\(Statics.getSlotId(index))", action: { game.setSlot(index) }, isSelected: game.slot == index, withAnim: false)
+                                    .monospacedScaledToFit()
                                     .aspectRatio(1.0, contentMode: .fill)
                                     .frame(maxWidth: 48, maxHeight: 48.0)
                             }

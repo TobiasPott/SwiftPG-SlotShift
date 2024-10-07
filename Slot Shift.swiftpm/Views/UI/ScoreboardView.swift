@@ -8,15 +8,17 @@ struct ScoreboardView: View {
         
         if let gameBehaviour = game.getGameBehaviour() {
             let score = gameBehaviour.score
-            let turnsIcon = Image(systemName: "arrow.circlepath")
+            let turnsIcon = Image(systemName: "arrow.uturn.right.square")
             let mergesIcon = Image(systemName: "arrow.triangle.merge")
             
             UIPanel {
                 VStack() {
                     HStack() {
                         ButtonStyled(title: "\(Statics.getSlotId(game.slot))")
-                            .frameMax(32, 32)
+                            
+                            .frameMax(48, 48)                            
                             .padding(.leading, 4)
+                            .aspectRatio(1.0, contentMode: .fit)
                         Spacer()
                         VScoreView(value: score.turns, icon: turnsIcon)
                         Spacer()

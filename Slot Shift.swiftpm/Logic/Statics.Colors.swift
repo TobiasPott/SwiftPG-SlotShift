@@ -12,5 +12,4 @@ extension Statics {
         }
         return _accentColor
     }}
-    
 }
