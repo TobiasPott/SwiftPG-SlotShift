@@ -16,6 +16,7 @@ struct AppSettingsView: View {
             ///-> CLICK-BLOCKER
             let blockerBackground = Rectangle().foregroundStyle(.black).opacity(0.25)
             Button(action: { withAnimation { hideAll() } }, label: { blockerBackground })
+                .ignoresSafeArea(.all)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .isHidden(!showContent, remove: !showContent)
             

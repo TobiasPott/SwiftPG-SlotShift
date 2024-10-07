@@ -6,7 +6,7 @@ struct Stack<Content: View>: View {
     }
     
     var layout: Layout = .horizontal
-    var content: () -> Content
+    @ViewBuilder let content: () -> Content
     var spacing: CGFloat = 10.0
     var verticalAlignment: VerticalAlignment = .center
     var horizontalAlignment: HorizontalAlignment = .center

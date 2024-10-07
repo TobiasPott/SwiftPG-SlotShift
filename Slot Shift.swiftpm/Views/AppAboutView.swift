@@ -25,7 +25,9 @@ struct AppAboutView: View {
         ZStack() {
             if showHeader {
                 Button(action: { withAnimation { hideAll() } }, label: { Rectangle().foregroundStyle(.black).opacity(0.25) })
+                    .ignoresSafeArea(.all)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
             }
             
             ///-> HEADER BLOCK

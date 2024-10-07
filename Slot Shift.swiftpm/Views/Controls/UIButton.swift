@@ -7,8 +7,8 @@ struct UIButton<Content: View>: View {
     
     var body: some View {
         content() 
-//            .padding()
-            .padding(.vertical, 6.0)
+            .padding()            
+            .padding(.bottom, 6.0)
             .padding(.horizontal)
             .backgroundButton(isSelected ? color : Color(.sRGB, white: 0.70, opacity: 1.0))
             .font(Statics.bodyFont)        
