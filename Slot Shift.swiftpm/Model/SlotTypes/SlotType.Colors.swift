@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SlotRGB: Mergable {
+struct SlotColor: Mergable {
     var red: Int;
     var green: Int;
     var blue: Int;
@@ -45,8 +45,8 @@ struct SlotRGB: Mergable {
 }
 
 // Static members
-extension SlotRGB {
-    static let WEIGHTED: Picklist<Self> = Picklist([.init(.red, 10), .init(.green, 10), .init(.blue, 10)])    
+extension SlotColor {
+    static let WEIGHTED: Picklist<Self> = Picklist([.init(.red, 10), .init(.green, 10), .init(.blue, 10), .init(.yellow, 10), .init(.purple, 10), .init(.cyan, 10)])    
     static let empty: Self = Self.init(red: 0, green: 0, blue: 0, alpha: 0, mode: .clear)
     
     static let white: Self = Self.init(red: 255, green: 255, blue: 255, mode: .clear)
@@ -55,10 +55,13 @@ extension SlotRGB {
     static let red: Self = Self.init(red: 255, green: 0, blue: 0, mode: .clear)
     static let green: Self = Self.init(red: 0, green: 255, blue: 0, mode: .clear)
     static let blue: Self = Self.init(red: 0, green: 0, blue: 255, mode: .clear)
+    static let yellow: Self = Self.init(red: 255, green: 255, blue: 0, mode: .clear)
+    static let purple: Self = Self.init(red: 255, green: 0, blue: 255, mode: .clear)
+    static let cyan: Self = Self.init(red: 0, green: 255, blue: 255, mode: .clear)
 }
 
 // Operator overloads
-extension SlotRGB {
+extension SlotColor {
     static func + (lhs: Self, rhs: Self) -> Self {
         return Self.init(red: Int(UInt8(clamping:     Int(lhs.red) + Int(rhs.red))), 
                          green: Int(UInt8(clamping:   Int(lhs.green) + Int(rhs.green))), 

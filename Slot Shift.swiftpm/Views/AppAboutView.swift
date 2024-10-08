@@ -45,10 +45,9 @@ struct AppAboutView: View {
                                     Text(str_b0_p1).padding(Edge.Set.bottom, 3.0)
                                     Text(str_b0_p2).padding(Edge.Set.bottom, 3.0)
                                     Link(destination: URL(string: "https://github.com/TobiasPott/SwiftPG-SlotShift")!) {
-                                        
                                         Text("GitHub Repository")
                                         Image(systemName: "rectangle.portrait.and.arrow.right")
-                                    }
+                                    }.foregroundStyle(.blue)
                                 }
                                 
                                 Image(systemName: "heart.circle")

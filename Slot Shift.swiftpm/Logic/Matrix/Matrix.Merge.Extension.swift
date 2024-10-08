@@ -11,7 +11,7 @@ extension Matrix where T: Equatable {
         let source = self[sRow, sCol]
         let dest = self[dRow, dCol]
         let nDest = dest.merge(source, source.Mode)
-        print("merge: \(source.Mode)")
+        print("merge: \(sRow),\(sCol) (\(source)) with \(dRow),\(dCol) (\(dest)) \(source.Mode)")
         self[dRow, dCol] = nDest            
         self[sRow, sCol] = clearValue
     }
@@ -58,6 +58,7 @@ extension Matrix where T: Equatable {
             // Remark: add iteration over all (to revEnd) to achieve merging all possible per columns/row
             //    change is required on columns AND rows functions 
             if self.canMerge(r, c, r+by, c, condition: condition) {
+                // ToDo: validate functionality, the mergeIfNot causes unexpected behaviour in colors mode
                 if self.mergeIfNot(r, c, r+by, c, clearWith) {
                     result += 1
                 }

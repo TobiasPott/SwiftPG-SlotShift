@@ -9,6 +9,27 @@ enum GameMove {
     case SY_newGame, SY_reset 
 }
 
+protocol GameBehaviour {
+    // Members
+    var score: GameScore { get }
+    var historyCount: Int { get }
+    var anyEmpty: Bool { get }
+    
+    // Ctor
+    init(_ cfg: GameConfig)
+    
+    // Functions
+    func newGame()
+    func revert()
+    func reset()
+    func nextTurn(_ move: GameMove)
+    
+    // Game event lifecycle
+    func gameTick(_ tick: UInt)
+    func gameFinalizeTick(_ tick: UInt)
+    // Game logic 
+}
+
 class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     typealias M = Matrix<S>
     typealias H = [M.Data]
@@ -108,10 +129,10 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
 class Game2048: GameBase<Slot2048> {
 }
 
-class GameColors: GameBase<SlotRGB> {
+class GameColors: GameBase<SlotColor> {
     override func gameTick(_ tick: UInt) {
-        if tick % 5 == 0 {
+        if tick % 5 == 0 || tick % 11 == 0 {
             self.move_FillSlot()
-        }
+        } 
     }
 }
