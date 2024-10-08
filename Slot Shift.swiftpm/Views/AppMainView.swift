@@ -19,12 +19,10 @@ struct AppMainView: View {
                     else { GameView(game: game) }
                 }
                 .frame(maxWidth: 720.0)
-                //                .background(.green)
                 .frame(maxHeight: .infinity, alignment: .top)
                 .padding(.horizontal)
                 .padding(.vertical)                
                 .padding(.top, 64.0)
-                //                .background(.red)
                 
                 // 'overlay/popover' settings and about views
                 AppSettingsView(game: game)
