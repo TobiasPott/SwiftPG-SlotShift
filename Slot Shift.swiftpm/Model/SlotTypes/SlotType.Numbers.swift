@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Slot2048: Mergable {
+struct Slot2048: Mergable, CustomStringConvertible {
     var val: Int;
     var aux: Int = 255;
     var Mode: MergeMode
@@ -12,10 +12,11 @@ struct Slot2048: Mergable {
         self.aux = aux;
         self.Mode = mode;
     }
+    var description: String { "\(val), a: \(aux) (\(self.Mode)" }
     
     func canMergeWith(_ other: Self, _ condition: MergeCondition) -> Bool {
         switch condition {
-        case .match:     return self.val == other.val     
+        case .match:     return self.val == other.val && (self.aux != 0 || other.aux != 0)     
         default:         return false
         }
     }
@@ -30,9 +31,9 @@ struct Slot2048: Mergable {
             numberView
                 .backgroundButton(isNotClear ? Statics.accentColor : Color.white.opacity(0.5))
         }
-        .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)
     }
+    
     var numberView: some View {
         let isNotClear: Bool = Mode != .clear
         return VStack(spacing: 0) {

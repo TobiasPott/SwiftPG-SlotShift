@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SlotColor: Mergable {
+struct SlotColor: Mergable, CustomStringConvertible {
     var red: Int;
     var green: Int;
     var blue: Int;
@@ -17,10 +17,12 @@ struct SlotColor: Mergable {
         self.alpha = alpha;
         self.mergeMode = mode;
     }
+    var description: String { "\(red), \(green), \(blue), a: \(alpha) (\(self.Mode)" }
+    
     
     func canMergeWith(_ other: Self, _ condition: MergeCondition) -> Bool {
         switch condition {
-        case .match:       return self.red == other.red && self.green == other.green && self.blue == other.blue   
+        case .match:       return self.red == other.red && self.green == other.green && self.blue == other.blue && (self.alpha != 0 || other.alpha != 0)
         default:           return false
         }
     }

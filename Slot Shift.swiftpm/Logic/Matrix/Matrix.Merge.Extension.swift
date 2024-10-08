@@ -4,14 +4,16 @@ extension Matrix where T: Equatable {
     func canMerge(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, condition: MergeCondition) -> Bool {
         let source = self[sRow, sCol]
         let dest = self[dRow, dCol]
-        return source.canMergeWith(dest, condition)
+        let result = source.canMergeWith(dest, condition) 
+        //        if result { print("canMerge: \(sRow),\(sCol) with \(dRow),\(dCol)") }
+        return result
     }
     ///->Merge source and destintion and set destination to clearValue
     private func merge(_ sRow: Int, _ sCol: Int, _ dRow: Int, _ dCol: Int, _ clearValue: T) {
         let source = self[sRow, sCol]
         let dest = self[dRow, dCol]
         let nDest = dest.merge(source, source.Mode)
-        print("merge: \(sRow),\(sCol) (\(source)) with \(dRow),\(dCol) (\(dest)) \(source.Mode)")
+        //        print("merge: (\(source)) with (\(dest)) \(source.Mode)")
         self[dRow, dCol] = nDest            
         self[sRow, sCol] = clearValue
     }
@@ -59,9 +61,10 @@ extension Matrix where T: Equatable {
             //    change is required on columns AND rows functions 
             if self.canMerge(r, c, r+by, c, condition: condition) {
                 // ToDo: validate functionality, the mergeIfNot causes unexpected behaviour in colors mode
-                if self.mergeIfNot(r, c, r+by, c, clearWith) {
-                    result += 1
-                }
+                self.merge(r, c, r+by, c, clearWith)
+                //                if self.mergeIfNot(r, c, r+by, c, clearWith) {
+                result += 1
+                //                }
             }
         }
         return result
@@ -88,9 +91,11 @@ extension Matrix where T: Equatable {
             // Remark: add iteration over all (to revEnd) to achieve merging all possible per columns/row
             //    change is required on columns AND rows functions
             if self.canMerge(r, c, r, c+by, condition: condition) {
-                if self.mergeIfNot(r, c, r, c+by, clearWith) { 
-                    result += 1
-                }
+                
+                self.merge(r, c, r, c+by, clearWith)
+                //                if self.mergeIfNot(r, c, r, c+by, clearWith) { 
+                result += 1
+                //                }
             }
         }
         return result

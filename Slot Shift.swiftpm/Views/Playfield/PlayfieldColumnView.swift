@@ -11,7 +11,6 @@ struct PlayfieldColumnView<S: Mergable>: View {
         HStack(spacing: slotSpacing) {    
             ForEach(0 ..< numOfColumns, id: \.self) { column in 
                 PlayfieldSlotView(entry: matrix[row, column])
-                    .transition(.scale)
             }   
             
         }
