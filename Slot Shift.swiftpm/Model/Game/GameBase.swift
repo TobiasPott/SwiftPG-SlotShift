@@ -22,6 +22,7 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
     public var historyCount: Int { get { return history.count } }
     public var anyEmpty: Bool { return matrix.anyEmpty() }
     
+    func getMatrix() -> M { return matrix }
     
     required init(_ cfg: GameConfig) {
         self.config = cfg;
@@ -53,12 +54,11 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
             let mergeDiff = self.matrix.data.getEmptyCount() - lastHistory.getEmptyCount()
             
             self.matrix.data = lastHistory
-            _ = history.remove(at: history.count-1)
+            _ = history.remove(at: history.count - 1)
             
             if(mergeDiff >= 0) {
-                score.merges -= (mergeDiff+1)
+                score.merges -= (mergeDiff + 1)
             }
-//            print("Revert: \(history.count) \(mergeDiff)")
         }
     }
     internal func reset() {
@@ -75,10 +75,13 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         move_FillSlot()
         score.turns += 1
     }
-    func getMatrix() -> M { return matrix }
+    // game frame events called by game handle
+    func gameTick(_ tick: UInt) { }
+    func gameFinalizeTick(_ tick: UInt) { }
+    
     
     enum CodingKeys: CodingKey {
-        case matrix, history, mergeCondition, mergeMode, score, config
+        case matrix, history, score, config
     }
     
     required init(from decoder: Decoder) throws {
@@ -99,4 +102,16 @@ class GameBase<S: Mergable> : ObservableObject, Codable, GameBehaviour {
         try container.encode(self.config, forKey: .config)
     }
     
+}
+
+
+class Game2048: GameBase<Slot2048> {
+}
+
+class GameColors: GameBase<SlotRGB> {
+    override func gameTick(_ tick: UInt) {
+        if tick % 5 == 0 {
+            self.move_FillSlot()
+        }
+    }
 }

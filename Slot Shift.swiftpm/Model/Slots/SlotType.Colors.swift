@@ -31,7 +31,7 @@ struct SlotRGB: Mergable {
     var asView: some View {
         return ZStack {
             numberView
-                .backgroundButton(asColor.opacity(0.5))
+                .backgroundButton(self == .empty ? .gray.opacity(1.0) : asColor.opacity(1.0))
         }
         .aspectRatio(1.0, contentMode: .fit)
         .foregroundColor(asColor)

@@ -11,7 +11,7 @@ struct PlayfieldView<S: Mergable>: View {
             ForEach(0 ..< matrix.size.rows, id: \.self) { row in
                 PlayfieldColumnView(matrix: matrix, row: row, numOfColumns: matrix.size.columns, slotSpacing: slotSpacing)
             }
-        }
+        }.padding(16)
     }
     
 }

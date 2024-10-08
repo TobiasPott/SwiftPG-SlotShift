@@ -1,17 +1,17 @@
 import SwiftUI
 
 class GameCollection : ObservableObject, Codable {
-    typealias GameTypeNumbers = GameBase<Slot2048>
-    typealias GameTypeColors = GameBase<SlotRGB>
+    typealias GameType2048 = Game2048
+    typealias GameTypeColors = GameColors
     
-    @Published var games2048_5by5: [GameTypeNumbers] 
-    @Published var games2048: [GameTypeNumbers]
+    @Published var games2048_5by5: [GameType2048] 
+    @Published var games2048: [GameType2048]
     @Published var gamesColors: [GameTypeColors]
     
     init() {
-        games2048_5by5 = Statics.make<Slot2048>(.GameCfg5x5, 4)
-        games2048 = Statics.make<Slot2048>(.GameCfg4x4, 4)
-        gamesColors = Statics.make<SlotRGB>(.colorsCfg5x5, 4)
+        games2048_5by5 = [.init(.GameCfg5x5), .init(.GameCfg5x5), .init(.GameCfg5x5), .init(.GameCfg5x5)]
+        games2048 = [.init(.GameCfg4x4), .init(.GameCfg4x4), .init(.GameCfg4x4), .init(.GameCfg4x4)]
+        gamesColors = [.init(.colorsCfg5x5), .init(.colorsCfg5x5), .init(.colorsCfg5x5), .init(.colorsCfg5x5)]
     }
     
     func getGame(_ mode: GameMode, _ slot: Int = 0) -> GameBehaviour? {
@@ -51,8 +51,8 @@ class GameCollection : ObservableObject, Codable {
     }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.games2048_5by5 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_5x5)
-        self.games2048 = try container.decode([GameTypeNumbers].self, forKey: .games_numbers_4x4)
+        self.games2048_5by5 = try container.decode([GameType2048].self, forKey: .games_numbers_5x5)
+        self.games2048 = try container.decode([GameType2048].self, forKey: .games_numbers_4x4)
         self.gamesColors = try container.decode([GameTypeColors].self, forKey: .games_colors_5x5)
     }
     

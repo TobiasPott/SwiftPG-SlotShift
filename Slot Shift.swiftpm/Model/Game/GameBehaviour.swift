@@ -14,4 +14,7 @@ protocol GameBehaviour {
     func revert()
     func reset()
     func nextTurn(_ move: GameMove)
+    
+    func gameTick(_ tick: UInt)
+    func gameFinalizeTick(_ tick: UInt)
 }

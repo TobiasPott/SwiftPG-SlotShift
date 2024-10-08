@@ -6,8 +6,8 @@ class GameHandle : ObservableObject, Codable {
     @Published private var games: GameCollection = GameCollection()
     @Published var mode: GameMode = .none
     @Published var selectedMode: GameMode = defaultGameMode
-    
     @Published var slot: Int = 0
+    
     @Published var tick: UInt = 0
     
     init() { }
@@ -28,13 +28,19 @@ class GameHandle : ObservableObject, Codable {
         self.save()
     }
     func revert() {    
-        tick += 1
+        onTick()
         games.revert(mode, slot) 
     }
-    func setMode(_ newMode: GameMode) { tick += 1; mode = newMode }
-    func setSlot(_ newSlot: Int) { tick += 1; slot = newSlot }
-    func nextTurn(_ move: GameMove) {
-        tick += 1
+    func setMode(_ newMode: GameMode, _ skipTick: Bool = false) { 
+        if !skipTick { onTick() }
+        mode = newMode 
+    }
+    func setSlot(_ newSlot: Int, _ skipTick: Bool = false) { 
+        if !skipTick { onTick() }
+        slot = newSlot 
+    }
+    func nextTurn(_ move: GameMove, _ skipTick: Bool = false) {
+        if !skipTick { onTick() }
         games.nextTurn(mode, slot, move: move)
     }
     func getGameBehaviour() -> GameBehaviour? { return games.getGame(mode, slot) }
@@ -47,6 +53,15 @@ class GameHandle : ObservableObject, Codable {
     func getIsSelected(_ modes: [GameMode]) -> Bool { return modes.contains { gameMode in
         return gameMode == self.selectedMode
     } }
+    internal func onTick() {
+        if let gameBehaviour = getGameBehaviour() {
+            gameBehaviour.gameTick(tick)
+            tick += 1
+            gameBehaviour.gameFinalizeTick(tick)
+        } else {
+            tick += 1
+        }
+    }
     
     
     enum CodingKeys: String, CodingKey {
@@ -78,9 +93,9 @@ class GameHandle : ObservableObject, Codable {
                 self.tick = 0
                 self.games = game.games
                 self.selectedMode = game.selectedMode
-                self.setSlot(game.slot)
-                self.setMode(game.mode)
-                self.tick += 1
+                self.setSlot(game.slot, true)
+                self.setMode(game.mode, true)
+                self.onTick()
                 return
                 
             } catch let DecodingError.keyNotFound(key, context) {
